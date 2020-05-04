@@ -1,0 +1,7 @@
+{
+  "name": "com.yukiarrr.masterbird",
+  "description": "MasterBird Host",
+  "path": "MasterBird.exe",
+  "type": "stdio",
+  "allowed_origins": ["chrome-extension://lngmeeilpeihclgdhjgedkdhpmnbjelf/"]
+}
