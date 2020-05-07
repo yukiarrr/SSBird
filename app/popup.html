@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <link id="selectize" rel="stylesheet" href="#" />
+    <link rel="stylesheet" href="css/popup.css" />
+  </head>
+  <body>
+    <div class="tabs">
+      <div class="tab-buttons">
+        <span class="content-base content1">Apply</span>
+        <span class="content-base content2">Config</span>
+        <div id="lamp" class="content-base content1"></div>
+      </div>
+
+      <div class="tab-content">
+        <div class="content-base content1 content-area">
+          Apply Spreadsheets
+          <select
+            id="select-apply-spreadsheets"
+            class="select-selectize"
+            placeholder="ex. stage"
+          >
+          </select>
+          <br />
+          Base Sheet
+          <select
+            id="select-base-sheet"
+            class="select-selectize"
+            placeholder="ex. develop"
+          >
+          </select>
+          <br />
+          Overlay Sheets (options)
+          <select
+            id="select-overlay-sheets"
+            class="select-selectize"
+            placeholder="ex. develop-v1.0.1"
+          >
+          </select>
+          <br />
+          <br />
+          <a id="btn-apply" class="btn-gradation btn-green">
+            Apply
+          </a>
+        </div>
+
+        <div class="content-base content2 content-area">
+          <a id="btn-reset" class="btn-gradation btn-red">
+            Reset
+          </a>
+        </div>
+      </div>
+    </div>
+    <script defer src="js/all.min.js"></script>
+    <script src="js/jquery-3.5.0.min.js" type="text/javascript"></script>
+    <script src="js/selectize.min.js" type="text/javascript"></script>
+    <script src="js/utils.js" type="text/javascript"></script>
+    <script src="js/popup.js" type="text/javascript"></script>
+  </body>
+</html>

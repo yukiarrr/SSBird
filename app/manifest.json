@@ -1,0 +1,39 @@
+{
+  "manifest_version": 2,
+  "name": "MasterBird",
+  "version": "1.0",
+  "description": "Merge sheets, and push it to GitHub as csv",
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "page_action": {
+    "default_title": "MasterBird",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "scripts": ["js/jquery-3.5.0.min.js", "js/utils.js", "js/background.js"],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://docs.google.com/spreadsheets/d/*",
+        "https://drive.google.com/drive/u/0/folders/*"
+      ],
+      "js": ["js/jquery-3.5.0.min.js", "js/contents.js"]
+    }
+  ],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1vZ/3Jhh0v7QkeqEPRoxGEq2IM6Dv8LDWRUF9evSCcaHEIqfsLG+o2lBb6wQm3fon0SxbRt5g80XA73h9gIU8/8EWRV8HFejnaNSGWzV2jswylmh8Y25BK/Av7RpuZJy3vq7104p5Nt8CKVF9dkNzcL3Q83C/PjTAedGGWhV9VWrB/AIW9PFZolkJIY6k8zLuS7i7V+yws5Vs1pv3ywB6NAsrtO4CftWEPbaE3YjAXaticHUC+EjtPAUcVpM+Pubip8nZt4RPMzEQR/TVtxilL0yYjaOjLmSJEJDC7q38H6y0JdTfcShotz3cM9uKDNsBaZQ5z6ktJgCqX/jCxEpNwIDAQAB",
+  "permissions": [
+    "declarativeContent",
+    "nativeMessaging",
+    "storage",
+    "tabs",
+    "https://script.google.com/",
+    "https://docs.google.com/",
+    "https://drive.google.com/",
+    "https://*.googleusercontent.com/"
+  ]
+}
