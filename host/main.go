@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/go-git/go-billy/v5"
@@ -137,7 +138,7 @@ func apply(baseBranchName string, userName string, userEmail string, csvs []Csv)
 		}
 	}
 
-	committed := false
+	var addedCsvPaths []string
 	for _, csv := range csvs {
 		csvPath := csv.Path + ".csv"
 		file, err := filesystem.OpenFile(csvPath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
@@ -151,35 +152,37 @@ func apply(baseBranchName string, userName string, userEmail string, csvs []Csv)
 			continue
 		}
 
-		hash, err := w.Commit("Update "+csvPath, &git.CommitOptions{
-			Author: &object.Signature{
-				Name:  userName,
-				Email: userEmail,
-				When:  time.Now(),
-			},
-		})
-		if err != nil {
-			continue
-		}
-
-		repository.Storer.SetReference(plumbing.NewReferenceFromStrings(baseBranchName, hash.String()))
-
-		committed = true
+		addedCsvPaths = append(addedCsvPaths, csvPath)
 	}
 
-	if committed {
-		remote, err := repository.Remote("origin")
-		if err != nil {
-			return err
-		}
-		err = remote.Push(&git.PushOptions{
-			RefSpecs: []config.RefSpec{
-				config.RefSpec(refName + ":" + plumbing.ReferenceName("refs/heads/"+baseBranchName)),
-			},
-		})
-		if err != nil {
-			return err
-		}
+	if len(addedCsvPaths) == 0 {
+		return fmt.Errorf("%s", "Not changed.")
+	}
+
+	hash, err := w.Commit("Update "+strings.Join(addedCsvPaths, ", "), &git.CommitOptions{
+		Author: &object.Signature{
+			Name:  userName,
+			Email: userEmail,
+			When:  time.Now(),
+		},
+	})
+	if err != nil {
+		return err
+	}
+
+	repository.Storer.SetReference(plumbing.NewReferenceFromStrings(baseBranchName, hash.String()))
+
+	remote, err := repository.Remote("origin")
+	if err != nil {
+		return err
+	}
+	err = remote.Push(&git.PushOptions{
+		RefSpecs: []config.RefSpec{
+			config.RefSpec(refName + ":" + plumbing.ReferenceName("refs/heads/"+baseBranchName)),
+		},
+	})
+	if err != nil {
+		return err
 	}
 
 	return nil
