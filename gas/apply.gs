@@ -39,7 +39,7 @@ function mergeSheets(spreadsheetId, baseSheetName, overlaySheetNames) {
   if (overlaySheetNames.length === 0) {
     // Base sheet only
     return {
-      csvValue: toCsv(baseSheet.getDataRange().getValues()),
+      csvValue: valuesToCsvs(baseSheet.getDataRange().getValues()),
       merged: true,
     };
   }
@@ -67,10 +67,10 @@ function mergeSheets(spreadsheetId, baseSheetName, overlaySheetNames) {
       overlayColumnIndex < firstOverlayValue.length;
       overlayColumnIndex++
     ) {
+      const overlayColumnValue = firstOverlayValue[overlayColumnIndex];
       if (
-        !firstBaseValue.some(
-          (value) => value == firstOverlayValue[overlayColumnIndex]
-        )
+        overlayColumnValue &&
+        !firstBaseValue.some((value) => value == overlayColumnValue)
       ) {
         insertColumnIndices.push(overlayColumnIndex);
       }
@@ -171,6 +171,7 @@ function mergeSheets(spreadsheetId, baseSheetName, overlaySheetNames) {
               baseColumnIndex++
             ) {
               if (
+                firstBaseValue[baseColumnIndex] &&
                 firstBaseValue[baseColumnIndex] ==
                   firstOverlayValue[overlayColumnIndex] &&
                 baseValue[baseColumnIndex] !== overlayValue[overlayColumnIndex]
@@ -199,9 +200,11 @@ function mergeSheets(spreadsheetId, baseSheetName, overlaySheetNames) {
           }`,
           values: [
             firstBaseValue.map((value) =>
-              overlayValue.find(
-                (element, index) => firstOverlayValue[index] == value
-              )
+              value
+                ? overlayValue.find(
+                    (element, index) => firstOverlayValue[index] == value
+                  )
+                : null
             ),
           ],
         });
@@ -230,16 +233,17 @@ function mergeSheets(spreadsheetId, baseSheetName, overlaySheetNames) {
   }
 
   return {
-    csvValue: toCsv(baseSheet.getDataRange().getValues()),
+    csvValue: valuesToCsvs(baseSheet.getDataRange().getValues()),
     merged: merged,
   };
 }
 
-function toCsv(baseValues) {
-  return baseValues
+function valuesToCsvs(values) {
+  return values
     .filter((row) => !ignoresRow(row))
     .map((row) =>
       row
+        .filter((element, index) => values[0][index])
         .map((value) =>
           /[",\r\n]/.test(value) ? `"${value.replace(/"/g, '""')}"` : value
         )
