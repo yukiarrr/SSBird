@@ -1,8 +1,16 @@
 const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 
-const closeWithMessage = (message) => {
-  alert(message);
+const closeWithMessage = async (message) => {
+  await alertOnBackground(message);
   close();
+};
+
+const alertOnBackground = async (message) => {
+  return new Promise((resolve) => {
+    chrome.runtime.getBackgroundPage((backgroundPage) =>
+      resolve(backgroundPage.alert(message))
+    );
+  });
 };
 
 const chromeStorage = {

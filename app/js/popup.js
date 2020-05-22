@@ -3,7 +3,7 @@ window.popupObject = {};
 const initializeBackground = async () => {
   const isInitializing = await getBackgroundVariable("isInitializing");
   if (isInitializing) {
-    closeWithMessage("Wait initializing...");
+    await closeWithMessage("Wait initializing...");
 
     return;
   }
@@ -44,17 +44,17 @@ const initializeSelectizes = () => {
   const selectSelectizes = $(".select-selectize");
   selectSelectizes.hide();
 
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+  chrome.tabs.query({ active: true, currentWindow: true }, async (tabs) => {
     const tab = tabs[0];
     if (tab.status !== "complete") {
-      closeWithMessage("Wait page loading...");
+      await closeWithMessage("Wait page loading...");
 
       return;
     }
 
-    chrome.tabs.sendMessage(tab.id, "", (response) => {
+    chrome.tabs.sendMessage(tab.id, "", async (response) => {
       if (!response || response.spreadsheets.length === 0) {
-        closeWithMessage("Reload page.");
+        await closeWithMessage("Reload page.");
 
         return;
       }
@@ -150,18 +150,18 @@ const initializeButtons = async () => {
     }
     const isInitializing = await getBackgroundVariable("isInitializing");
     if (isInitializing) {
-      alert("Wait initializing...");
+      await alertOnBackground("Wait initializing...");
 
       return;
     }
     const isInitialized = await getBackgroundVariable("isInitialized");
     if (!isInitialized) {
-      alert("Failed initialize.\nInput config.");
+      await alertOnBackground("Failed initialize.\nInput config.");
 
       return;
     }
     if (popupObject.baseSheetSelectize.items.length === 0) {
-      alert("Select base sheet.");
+      await alertOnBackground("Select base sheet.");
 
       return;
     }
