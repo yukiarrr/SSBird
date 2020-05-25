@@ -20,7 +20,7 @@
     {
       "matches": [
         "https://docs.google.com/spreadsheets/d/*",
-        "https://drive.google.com/drive/u/0/folders/*"
+        "https://drive.google.com/drive/u/*/folders/*"
       ],
       "js": ["js/jquery-3.5.0.min.js", "js/contents.js"]
     }

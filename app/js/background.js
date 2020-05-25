@@ -53,21 +53,32 @@ backgroundObject.initialize = async () => {
     return;
   }
 
-  try {
-    Object.assign(
-      backgroundObject,
-      await $.get({
-        url: `https://drive.google.com/uc?export=download&id=${backgroundObject.globalConfigFileId}`,
-      })
-    );
-  } catch (e) {
-    backgroundObject.isInitializing = false;
-    await chromeStorage.remove("globalConfigFileId");
-    delete backgroundObject.globalConfigFileId;
-    alert(
-      `Failed download global-config.json.\nCheck globalConfigFileId.\n\n${e.responseText}`
-    );
+  const maxRequestCount = 5;
+  const downloadGlobalConfig = async (i) => {
+    try {
+      Object.assign(
+        backgroundObject,
+        await $.get({
+          url: `https://drive.google.com/u/${i}/uc?export=download&id=${backgroundObject.globalConfigFileId}`,
+        })
+      );
+    } catch (e) {
+      if (i < maxRequestCount && e.status === 403) {
+        i++;
+        await downloadGlobalConfig(i);
+      } else {
+        backgroundObject.isInitializing = false;
+        await chromeStorage.remove("globalConfigFileId");
+        delete backgroundObject.globalConfigFileId;
+        alert(
+          `Failed download global-config.json.\nCheck globalConfigFileId.\n\n${e.responseText}`
+        );
+      }
+    }
+  };
 
+  await downloadGlobalConfig(0);
+  if (!backgroundObject.globalConfigFileId) {
     return;
   }
 
