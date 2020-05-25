@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "MasterBird",
   "version": "1.0",
-  "description": "Merge sheets, and push it to GitHub as csv",
+  "description": "Merge sheets in Spreadsheet and push it to GitHub as csv",
   "icons": {
     "16": "icons/16.png",
     "48": "icons/48.png",
