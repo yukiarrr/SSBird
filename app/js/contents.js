@@ -18,7 +18,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           const divSpreadsheet = $(element);
           return {
             id: divSpreadsheet.attr("data-id"),
-            name: divSpreadsheet.find("div[data-column-field='6']").text(),
+            name:
+              divSpreadsheet.find("div[data-column-field='6']").text() ||
+              divSpreadsheet.text(),
           };
         })
         .get();
