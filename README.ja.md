@@ -46,11 +46,11 @@ Chrome拡張だけで、Spreadsheetのシート同士をマージし、それを
 ### 全メンバー
 
 1. [Releases](https://github.com/yukiarrr/MasterBird/releases)から、使用したいバージョンの`MasterBird-vX.X.X.Client.zip`をダウンロードし、解凍してください
-2. Macユーザーなら、`MasterBird/installer/mac/install.command`を右クリックし、commandキーを押しながら「開く」を選択するとダイアログが出るので、「開く」を選択してください
-3. Windowsユーザーなら、`MasterBird/installer/windows/install.bat`をダブルクリックしてください
+2. Macユーザーなら、`MasterBird/extension/installer/mac/install.command`を右クリックし、commandキーを押しながら「開く」を選択するとダイアログが出るので、「開く」を選択してください
+3. Windowsユーザーなら、`MasterBird/extension/installer/windows/install.bat`をダブルクリックしてください
 4. 管理者指定のGitHubアカウントでログインしてください
 5. [こちら](https://help.github.com/ja/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)を参考に、参考元の手順の7で「repo」にチェックを入れてから、GitHubのアクセストークンを発行してください
-6. `chrome://extensions`にアクセスし、右上のデベロッパーモードをオンにしてから、「パッケージ化されていない拡張機能を読み込む」で`MasterBird/app`を選択してください
+6. `chrome://extensions`にアクセスし、右上のデベロッパーモードをオンにしてから、「パッケージ化されていない拡張機能を読み込む」で`MasterBird/extension/app`を選択してください
 7. 管理者指定のGoogleアカウントでログインしてください
 8. Spreadsheetの画面や、Google DriveのSpreadsheetが存在するフォルダの画面にいくと、Chromeの右上のMasterBirdアイコンが押せるようになるので、それを押してください
 9. 情報の入力を求められるので、入力してください（gitHubAccessTokenは、この手順の4で取得したものを使用してください）
@@ -63,9 +63,9 @@ Chrome拡張だけで、Spreadsheetのシート同士をマージし、それを
   // apply.gsのWebアプリケーション公開後に取得できるURL
   "applyUrl": "https://script.google.com/XXXXXXX/exec",
 
-  // プッシュするGitHubリポジトリのHTTPS URLs
+  // プッシュするGitHubリポジトリのURL
   // アクセストークンを発行するユーザーにWrite以上の権限を与えてください
-  "repositoryUrl": "https://github.com/yukiarrr/MasterBird.git",
+  "repositoryUrl": "https://github.com/XXXXXXX/XXXXXXX",
 
   // このIDのフォルダからSpreadsheetまでのパスが、GitHub上でのパスとなる
   // フォルダのIDは、そのフォルダをブラウザで開いた状態のURLで

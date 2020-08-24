@@ -46,11 +46,11 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
 ### All members
 
 1. Download the version of `MasterBird-vX.X.X.Client.zip` you want to use from the [Releases](https://github.com/yukiarrr/MasterBird/releases) and unzip it
-2. If you are a Mac user, right-click on `MasterBird/installer/mac/install.command`, hold down the command key and select "Open", which will bring up a dialog, then select "Open"
-3. If you are a Windows user, double-click on `MasterBird/installer/windows/install.bat`
+2. If you are a Mac user, right-click on `MasterBird/extension/installer/mac/install.command`, hold down the command key and select "Open", which will bring up a dialog, then select "Open"
+3. If you are a Windows user, double-click on `MasterBird/extension/installer/windows/install.bat`
 4. Please log in with your administrator-designated GitHub account
 5. Please refer to [this page](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line) and check the "repo" box in step 7 of the reference, and then issue the GitHub access token
-6. Go to `chrome://extensions`, turn on developer mode in the upper right corner, and select `MasterBird/app` under "LOAD UNPACKED"
+6. Go to `chrome://extensions`, turn on developer mode in the upper right corner, and select `MasterBird/extension/app` under "LOAD UNPACKED"
 7. Please log in with your administrator-designated Google account
 8. When you go to the Spreadsheet screen or the folder where Spreadsheet is located in Google Drive, you will be able to press the MasterBird icon in the upper right corner of Chrome
 9. You will be asked for information, so enter it (use the gitHubAccessToken you got in step 4 of this procedure)
@@ -63,9 +63,9 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
   // URLs that can be obtained after publishing a web application in apply.gs
   "applyUrl": "https://script.google.com/XXXXXXX/exec",
 
-  // HTTPS URLs of the GitHub repository to push
+  // URL of the GitHub repository to push
   // Please give the user who issues the access token more than Write permission
-  "repositoryUrl": "https://github.com/yukiarrr/MasterBird.git",
+  "repositoryUrl": "https://github.com/XXXXXXX/XXXXXXX",
 
   // The path from this ID folder to Spreadsheet will be the path on GitHub
   // The ID of the folder is the URL in the state of opening the folder with a browser, and
