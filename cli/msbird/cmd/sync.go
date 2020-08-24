@@ -66,7 +66,7 @@ func readConfig() error {
 	if err != nil {
 		return err
 	}
-	viper.SetConfigFile(filepath.Join(configDir, "MasterBird", "config.json"))
+	viper.SetConfigFile(filepath.Join(configDir, "MasterBird", "cli-config.json"))
 	err = viper.ReadInConfig()
 	if err != nil {
 		return err

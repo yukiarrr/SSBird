@@ -37,8 +37,8 @@ type Request struct {
 	FunctionType   FunctionType `json:"functionType"`
 	RepositoryUrl  string       `json:"repositoryUrl"`
 	BaseBranchName string       `json:"baseBranchName"`
-	UserName       string       `json:"userName"`
-	UserEmail      string       `json:"userEmail"`
+	Username       string       `json:"username"`
+	Email          string       `json:"email"`
 	Csvs           []Csv        `json:"csvs"`
 }
 
@@ -68,7 +68,7 @@ func main() {
 				continue
 			}
 		case Apply:
-			err = apply(req.BaseBranchName, req.UserName, req.UserEmail, req.Csvs)
+			err = apply(req.BaseBranchName, req.Username, req.Email, req.Csvs)
 			if err == nil {
 				sendMessage([]byte("{}"))
 				continue
@@ -93,7 +93,7 @@ func initialize(repositoryUrl string) error {
 	return err
 }
 
-func apply(baseBranchName string, userName string, userEmail string, csvs []Csv) error {
+func apply(baseBranchName string, username string, email string, csvs []Csv) error {
 	branchs, err := repository.Branches()
 	if err != nil {
 		return err
@@ -161,8 +161,8 @@ func apply(baseBranchName string, userName string, userEmail string, csvs []Csv)
 
 	hash, err := w.Commit("Update "+strings.Join(addedCsvPaths, ", "), &git.CommitOptions{
 		Author: &object.Signature{
-			Name:  userName,
-			Email: userEmail,
+			Name:  username,
+			Email: email,
 			When:  time.Now(),
 		},
 	})

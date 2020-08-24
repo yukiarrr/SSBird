@@ -77,7 +77,8 @@ body {
   padding-bottom: 10px;
 }
 
-.select-selectize {
+.select-apply-selectize,
+.select-config-selectize {
   margin-top: 5px;
 }
 

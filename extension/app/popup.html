@@ -18,7 +18,7 @@
           Apply Spreadsheets
           <select
             id="select-apply-spreadsheets"
-            class="select-selectize"
+            class="select-apply-selectize"
             placeholder="ex. stage"
           >
           </select>
@@ -26,7 +26,7 @@
           Base Sheet
           <select
             id="select-base-sheet"
-            class="select-selectize"
+            class="select-apply-selectize"
             placeholder="ex. develop"
           >
           </select>
@@ -34,7 +34,7 @@
           Overlay Sheets (options)
           <select
             id="select-overlay-sheets"
-            class="select-selectize"
+            class="select-apply-selectize"
             placeholder="ex. develop-v1.0.1"
           >
           </select>
@@ -46,8 +46,27 @@
         </div>
 
         <div class="content-base content2 content-area">
-          <a id="btn-reset" class="btn-gradation btn-red">
-            Reset
+          GitHub Username
+          <select id="select-github-username" class="select-config-selectize">
+          </select>
+          <br />
+          GitHub Email
+          <select id="select-github-email" class="select-config-selectize">
+          </select>
+          <br />
+          GitHub Access Token (options)
+          <select
+            id="select-github-access-token"
+            class="select-config-selectize"
+          >
+          </select>
+          <br />
+          Config File Id
+          <select id="select-config-file-id" class="select-config-selectize">
+          </select>
+          <br />
+          <a id="btn-save" class="btn-gradation btn-green">
+            Save
           </a>
         </div>
       </div>

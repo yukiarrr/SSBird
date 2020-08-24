@@ -10,7 +10,7 @@ This is a master data management tool that can merge sheets in Spreadsheet and p
 - [Getting started](#getting-started)
   - [Administrator only](#administrator-only)
   - [All members](#all-members)
-  - [About `global-config.json`](#about-global-configjson)
+  - [About `extension-config.json`](#about-extension-configjson)
 - [How to use](#how-to-use)
   - [Support dark mode](#support-dark-mode)
   - [Push a sheet directly to GitHub](#push-a-sheet-directly-to-github)
@@ -39,9 +39,9 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
 3. Open the code editor, overwrite it with the code in `MasterBird/gas/apply.gs` and save it
 4. From the status bar above, go to `Resources > Advanced Google services...` and turn on "Google Sheets API"
 5. From the status bar above, select `Publish > Deploy as Web app...` and change the permissions under "Who has access to the app" so that MasterBird members can access it, then press "Update" (you will be asked to approve it after the update, so follow the instructions to approve it)
-6. Edit MasterBird/examples/global-config.json with reference to [this](#about-global-configjson) (use the URL that appears after the completion of step 5 of this procedure for applyUrl)
-7. Right-click on the configuration file in a location on Google Drive that your team members can access and upload the `global-config.json` that you edited in `Upload files`
-8. Right-click on the uploaded `global-config.json`, select `Get shareable link`, and note the `XXXXXXX` part of `https://drive.google.com/open?id=XXXXXXX` as the ID (it will be required as globalConfigFileId when the Chrome extension is installed)
+6. Edit MasterBird/examples/extension-config.json with reference to [this](#about-extension-configjson) (use the URL that appears after the completion of step 5 of this procedure for applyUrl)
+7. Right-click on the configuration file in a location on Google Drive that your team members can access and upload the `extension-config.json` that you edited in `Upload files`
+8. Right-click on the uploaded `extension-config.json`, select `Get shareable link`, and note the `XXXXXXX` part of `https://drive.google.com/open?id=XXXXXXX` as the ID (it will be required as Config File Id when the Chrome extension is installed)
 
 ### All members
 
@@ -53,10 +53,10 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
 6. Go to `chrome://extensions`, turn on developer mode in the upper right corner, and select `MasterBird/extension/app` under "LOAD UNPACKED"
 7. Please log in with your administrator-designated Google account
 8. When you go to the Spreadsheet screen or the folder where Spreadsheet is located in Google Drive, you will be able to press the MasterBird icon in the upper right corner of Chrome
-9. You will be asked for information, so enter it (use the gitHubAccessToken you got in step 4 of this procedure)
-10. The globalConfigFileId should be told to you by your administrator
+9. You will be asked for information, so enter it (use the GitHub Access Token you got in step 4 of this procedure)
+10. Config File Id should be told to you by your administrator
 
-### About `global-config.json`
+### About `extension-config.json`
 
 ```jsonc
 {
