@@ -9,76 +9,44 @@ window.backgroundObject = {};
 backgroundObject.isInitializing = false;
 backgroundObject.isInitialized = false;
 backgroundObject.isApplying = false;
+backgroundObject.saveCallback = () => {};
 backgroundObject.applyCallback = () => {};
 
-backgroundObject.initialize = async () => {
-  if (backgroundObject.isInitializing || backgroundObject.isInitialized) {
-    return;
-  }
-
+backgroundObject.initialize = async (args) => {
+  backgroundObject.saveCallback = args.callback;
+  delete args.callback;
+  Object.assign(backgroundObject, args);
   backgroundObject.isInitializing = true;
+  backgroundObject.isInitialized = false;
 
-  Object.assign(
-    backgroundObject,
-    await chromeStorage.get([
-      "gitHubUserName",
-      "gitHubUserEmail",
-      "gitHubAccessToken",
-      "globalConfigFileId",
-    ])
-  );
-
-  const promptIfEmpty = async (key) => {
-    if (!backgroundObject[key]) {
-      backgroundObject[key] = prompt(`Input ${key}.`);
-
-      if (!backgroundObject[key]) {
-        throw `Empty ${key}.`;
-      }
-    }
-    await chromeStorage.set({
-      key: backgroundObject[key],
-    });
-  };
-
-  try {
-    await promptIfEmpty("gitHubUserName");
-    await promptIfEmpty("gitHubUserEmail");
-    await promptIfEmpty("gitHubAccessToken");
-    await promptIfEmpty("globalConfigFileId");
-  } catch (e) {
-    backgroundObject.isInitializing = false;
-    alert(e);
-
-    return;
-  }
+  await chromeStorage.set(args);
 
   const maxRequestCount = 5;
-  const downloadGlobalConfig = async (i) => {
+  const downloadConfig = async (i) => {
     try {
       Object.assign(
         backgroundObject,
         await $.get({
-          url: `https://drive.google.com/u/${i}/uc?export=download&id=${backgroundObject.globalConfigFileId}`,
+          url: `https://drive.google.com/u/${i}/uc?export=download&id=${backgroundObject.configFileId}`,
         })
       );
     } catch (e) {
       if (i < maxRequestCount && e.status === 403) {
         i++;
-        await downloadGlobalConfig(i);
+        await downloadConfig(i);
       } else {
         backgroundObject.isInitializing = false;
-        await chromeStorage.remove("globalConfigFileId");
-        delete backgroundObject.globalConfigFileId;
+        await chromeStorage.remove("configFileId");
+        delete backgroundObject.configFileId;
         alert(
-          `Failed download global-config.json.\nCheck globalConfigFileId.\n\n${e.responseText}`
+          `Failed download extension-config.json.\nCheck Config File Id.\n\n${e.responseText}`
         );
       }
     }
   };
 
-  await downloadGlobalConfig(0);
-  if (!backgroundObject.globalConfigFileId) {
+  await downloadConfig(0);
+  if (!backgroundObject.configFileId) {
     return;
   }
 
@@ -87,7 +55,7 @@ backgroundObject.initialize = async () => {
     repositoryUrl:
       backgroundObject.repositoryUrl.replace(
         "https://",
-        `https://${backgroundObject.gitHubUserName}:${backgroundObject.gitHubAccessToken}@`
+        `https://${backgroundObject.gitHubUsername}:${backgroundObject.gitHubAccessToken}@`
       ) + ".git",
   });
 };
@@ -106,7 +74,7 @@ backgroundObject.apply = async (args) => {
   if (!backgroundObject.applyUrl || !backgroundObject.rootFolderId) {
     backgroundObject.isApplying = false;
     callback();
-    alert("Not found applyUrl or rootFolderId.\nCheck global-config.json.");
+    alert("Not found applyUrl or rootFolderId.\nCheck extension-config.json.");
 
     return;
   }
@@ -129,7 +97,7 @@ backgroundObject.apply = async (args) => {
       backgroundObject.isApplying = false;
       callback();
       alert(
-        `Failed apply api.\nCheck applyUrl in global-config.json.\n\n${e.responseText}`
+        `Failed apply api.\nCheck applyUrl in extension-config.json.\n\n${e.responseText}`
       );
 
       return;
@@ -148,10 +116,10 @@ backgroundObject.apply = async (args) => {
     return;
   }
 
-  if (!backgroundObject.gitHubUserName || !backgroundObject.gitHubUserEmail) {
+  if (!backgroundObject.gitHubUsername || !backgroundObject.gitHubEmail) {
     backgroundObject.isApplying = false;
     callback();
-    alert("Not found gitHubUserName or gitHubUserEmail.\nReset Config.");
+    alert("Not found GitHub Username or GitHub Email.\nResave Config.");
 
     return;
   }
@@ -159,30 +127,25 @@ backgroundObject.apply = async (args) => {
   port.postMessage({
     functionType: FunctionType.Apply,
     baseBranchName: baseSheetName,
-    userName: backgroundObject.gitHubUserName,
-    userEmail: backgroundObject.gitHubUserEmail,
+    userName: backgroundObject.gitHubUsername,
+    userEmail: backgroundObject.gitHubEmail,
     csvs: csvs,
   });
-};
-
-backgroundObject.reset = async () => {
-  backgroundObject.isInitializing = false;
-  backgroundObject.isInitialized = false;
-  await chromeStorage.clear();
 };
 
 const port = chrome.runtime.connectNative("com.yukiarrr.masterbird");
 port.onMessage.addListener((message) => {
   backgroundObject.isInitializing = false;
   backgroundObject.isApplying = false;
+  backgroundObject.saveCallback();
   backgroundObject.applyCallback();
 
   if (!message.errorMessage) {
     if (!backgroundObject.isInitialized) {
       backgroundObject.isInitialized = true;
-    } else {
-      alert("Success 🎉");
     }
+
+    alert("Success 🎉");
   } else {
     alert(message.errorMessage);
   }

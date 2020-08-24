@@ -10,7 +10,7 @@ Chrome拡張だけで、Spreadsheetのシート同士をマージし、それを
 - [導入手順](#導入手順)
   - [管理者のみ](#管理者のみ)
   - [全メンバー](#全メンバー)
-  - [`global-config.json`について](#global-configjsonについて)
+  - [`extension-config.json`について](#extension-configjsonについて)
 - [使い方](#使い方)
   - [ダークモードをサポート](#ダークモードをサポート)
   - [シートを直接GitHubにプッシュする](#シートを直接GitHubにプッシュする)
@@ -39,9 +39,9 @@ Chrome拡張だけで、Spreadsheetのシート同士をマージし、それを
 3. コードエディタが開くので、`MasterBird/gas/apply.gs`のコードで上書き後に保存してください
 4. 上のステータスバーから、`リソース > Google の拡張サービス...`を選択し、「Google Sheets API」をONにしてください
 5. 上のステータスバーから、`公開 > ウェブ アプリケーションとして導入...`を選択し、「Who has access to the app」でMasterBirdを使用するメンバーがアクセスできるように権限を変更してから「更新」を押してください（更新後に承認を求められるので、説明に従って承認してください）
-6. [こちら](#global-configjsonについて)を参考に、`MasterBird/examples/global-config.json`を編集します（applyUrlはこの手順の5の完了後に表示されるURLを使用してください）
-7. 設定ファイルをチームメンバーがアクセスできるGoogle Drive上の場所で右クリックし、`ファイルをアップロード`で編集した`global-config.json`をアップロードします
-8. アップロードした`global-config.json`を右クリックし、`共有可能なリンクを取得`を選択し、取得した`https://drive.google.com/open?id=XXXXXXX`のうち、`XXXXXXX`の部分をIDとしてメモしてください（Chrome拡張導入時にglobalConfigFileIdとして必要となります）
+6. [こちら](#extension-configjsonについて)を参考に、`MasterBird/examples/extension-config.json`を編集します（applyUrlはこの手順の5の完了後に表示されるURLを使用してください）
+7. 設定ファイルをチームメンバーがアクセスできるGoogle Drive上の場所で右クリックし、`ファイルをアップロード`で編集した`extension-config.json`をアップロードします
+8. アップロードした`extension-config.json`を右クリックし、`共有可能なリンクを取得`を選択し、取得した`https://drive.google.com/open?id=XXXXXXX`のうち、`XXXXXXX`の部分をIDとしてメモしてください（Chrome拡張導入時にConfig File Idとして必要となります）
 
 ### 全メンバー
 
@@ -53,10 +53,10 @@ Chrome拡張だけで、Spreadsheetのシート同士をマージし、それを
 6. `chrome://extensions`にアクセスし、右上のデベロッパーモードをオンにしてから、「パッケージ化されていない拡張機能を読み込む」で`MasterBird/extension/app`を選択してください
 7. 管理者指定のGoogleアカウントでログインしてください
 8. Spreadsheetの画面や、Google DriveのSpreadsheetが存在するフォルダの画面にいくと、Chromeの右上のMasterBirdアイコンが押せるようになるので、それを押してください
-9. 情報の入力を求められるので、入力してください（gitHubAccessTokenは、この手順の4で取得したものを使用してください）
-10. globalConfigFileIdは、管理者から教えてもらってください
+9. 情報の入力を求められるので、入力してください（GitHub Access Tokenは、この手順の4で取得したものを使用してください）
+10. Config File Idは、管理者から教えてもらってください
 
-### `global-config.json`について
+### `extension-config.json`について
 
 ```jsonc
 {
