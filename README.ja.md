@@ -63,9 +63,9 @@ Chrome拡張だけで、Spreadsheetのシート同士をマージし、それを
   // apply.gsのWebアプリケーション公開後に取得できるURL
   "applyUrl": "https://script.google.com/XXXXXXX/exec",
 
-  // プッシュするGitHubリポジトリのHTTPS URLs
+  // プッシュするGitHubリポジトリのURL
   // アクセストークンを発行するユーザーにWrite以上の権限を与えてください
-  "repositoryUrl": "https://github.com/yukiarrr/MasterBird.git",
+  "repositoryUrl": "https://github.com/XXXXXXX/XXXXXXX",
 
   // このIDのフォルダからSpreadsheetまでのパスが、GitHub上でのパスとなる
   // フォルダのIDは、そのフォルダをブラウザで開いた状態のURLで

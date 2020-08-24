@@ -84,10 +84,11 @@ backgroundObject.initialize = async () => {
 
   port.postMessage({
     functionType: FunctionType.Initialize,
-    repositoryUrl: backgroundObject.repositoryUrl.replace(
-      "https://",
-      `https://${backgroundObject.gitHubUserName}:${backgroundObject.gitHubAccessToken}@`
-    ),
+    repositoryUrl:
+      backgroundObject.repositoryUrl.replace(
+        "https://",
+        `https://${backgroundObject.gitHubUserName}:${backgroundObject.gitHubAccessToken}@`
+      ) + ".git",
   });
 };
 

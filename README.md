@@ -63,9 +63,9 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
   // URLs that can be obtained after publishing a web application in apply.gs
   "applyUrl": "https://script.google.com/XXXXXXX/exec",
 
-  // HTTPS URLs of the GitHub repository to push
+  // URL of the GitHub repository to push
   // Please give the user who issues the access token more than Write permission
-  "repositoryUrl": "https://github.com/yukiarrr/MasterBird.git",
+  "repositoryUrl": "https://github.com/XXXXXXX/XXXXXXX",
 
   // The path from this ID folder to Spreadsheet will be the path on GitHub
   // The ID of the folder is the URL in the state of opening the folder with a browser, and
