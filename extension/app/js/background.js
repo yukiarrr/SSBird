@@ -127,8 +127,8 @@ backgroundObject.apply = async (args) => {
   port.postMessage({
     functionType: FunctionType.Apply,
     baseBranchName: baseSheetName,
-    userName: backgroundObject.gitHubUsername,
-    userEmail: backgroundObject.gitHubEmail,
+    username: backgroundObject.gitHubUsername,
+    email: backgroundObject.gitHubEmail,
     csvs: csvs,
   });
 };
