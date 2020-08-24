@@ -18,7 +18,7 @@ var initCmd = &cobra.Command{
 	Long: `Initialize msbird command.
 For example,
 
-msbird init --config config.json --service-account service-account.json
+msbird init --config cli-config.json --service-account service-account.json
 
 In this example, you use config and service account to initialize msbird.
 The json keys required in config are as follows
@@ -62,7 +62,7 @@ func initConfig() error {
 	}
 	msDir := filepath.Join(configDir, "MasterBird")
 	_ = os.Mkdir(msDir, 0755)
-	err = viper.WriteConfigAs(filepath.Join(msDir, "config.json"))
+	err = viper.WriteConfigAs(filepath.Join(msDir, "cli-config.json"))
 	if err != nil {
 		return err
 	}
