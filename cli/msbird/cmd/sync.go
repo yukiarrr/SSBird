@@ -152,18 +152,44 @@ func getGoogleAccessToken() (string, error) {
 		return "", err
 	}
 	msDir := filepath.Join(configDir, "MasterBird")
-	jsonBytes, err := ioutil.ReadFile(filepath.Join(msDir, "service-account.json"))
-	if err != nil {
-		return "", err
-	}
+	saPath := filepath.Join(msDir, "service-account.json")
 
-	config, err := google.JWTConfigFromJSON(jsonBytes, drive.DriveScope)
-	if err != nil {
-		return "", err
-	}
-	token, err := config.TokenSource(oauth2.NoContext).Token()
-	if err != nil {
-		return "", err
+	var token *oauth2.Token
+
+	if _, err := os.Stat(saPath); err == nil {
+		// Service Account
+
+		jsonBytes, err := ioutil.ReadFile(filepath.Join(msDir, "service-account.json"))
+		if err != nil {
+			return "", err
+		}
+
+		config, err := google.JWTConfigFromJSON(jsonBytes, drive.DriveScope)
+		if err != nil {
+			return "", err
+		}
+		token, err = config.TokenSource(oauth2.NoContext).Token()
+		if err != nil {
+			return "", err
+		}
+	} else {
+		// OAuth 2.0
+
+		oldToken := new(oauth2.Token)
+		oldToken.RefreshToken = viper.GetString("googleRefreshToken")
+		oldToken.TokenType = "Bearer"
+
+		var config = &oauth2.Config{
+			ClientID:     viper.GetString("googleClientId"),
+			ClientSecret: viper.GetString("googleClientSecret"),
+			Endpoint:     google.Endpoint,
+			Scopes:       []string{drive.DriveScope},
+		}
+
+		token, err = config.TokenSource(oauth2.NoContext, oldToken).Token()
+		if err != nil {
+			return "", err
+		}
 	}
 
 	return token.AccessToken, nil
