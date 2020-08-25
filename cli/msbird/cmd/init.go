@@ -44,7 +44,6 @@ func init() {
 	initCmd.Flags().StringVarP(&serviceAccount, "service-account", "s", "", "downloaded google service account json key path")
 
 	initCmd.MarkFlagRequired("config")
-	initCmd.MarkFlagRequired("service-account")
 }
 
 func initConfig() error {
@@ -67,13 +66,18 @@ func initConfig() error {
 		return err
 	}
 
-	saBytes, err := ioutil.ReadFile(serviceAccount)
-	if err != nil {
-		return err
-	}
-	err = ioutil.WriteFile(filepath.Join(msDir, "service-account.json"), saBytes, 0644)
-	if err != nil {
-		return err
+	saPath := filepath.Join(msDir, "service-account.json")
+	if serviceAccount != "" {
+		saBytes, err := ioutil.ReadFile(serviceAccount)
+		if err != nil {
+			return err
+		}
+		err = ioutil.WriteFile(saPath, saBytes, 0644)
+		if err != nil {
+			return err
+		}
+	} else {
+		os.Remove(saPath)
 	}
 
 	return nil
