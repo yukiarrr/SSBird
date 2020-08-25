@@ -13,6 +13,14 @@ const alertOnBackground = async (message) => {
   });
 };
 
+const confirmOnBackground = async (message) => {
+  return new Promise((resolve) => {
+    chrome.runtime.getBackgroundPage((backgroundPage) =>
+      resolve(backgroundPage.confirm(message))
+    );
+  });
+};
+
 const chromeStorage = {
   get: async (keys) => {
     return new Promise((resolve) => {
