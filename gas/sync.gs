@@ -2,11 +2,26 @@
 // https://github.com/yukiarrr/MasterBird
 // MIT License
 
+/* =================================== */
+
+// Change only here
+const password = "";
+
+/* =================================== */
+
 function doPost(e) {
-  const { csvValue, sheetName, rootFolderId, spreadsheetPath } = JSON.parse(
-    decodeURI(e.postData.getDataAsString())
-  );
+  const {
+    csvValue,
+    sheetName,
+    rootFolderId,
+    spreadsheetPath,
+    syncPassword,
+  } = JSON.parse(decodeURI(e.postData.getDataAsString()));
   const response = {};
+
+  if (syncPassword !== password) {
+    throw new Error("Wrong password.");
+  }
 
   sync(csvValue, sheetName, rootFolderId, spreadsheetPath);
 
