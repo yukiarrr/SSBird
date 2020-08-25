@@ -37,11 +37,13 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
 1. Download the version of `MasterBird-vX.X.X.Server.zip` you want to use from the [Releases](https://github.com/yukiarrr/MasterBird/releases) and unzip it
 2. Right-click on the location on Google Drive where you want to save the script and select `More > Google Apps Script`
 3. Open the code editor, overwrite it with the code in `MasterBird/gas/apply.gs` and save it
-4. From the status bar above, go to `Resources > Advanced Google services...` and turn on "Google Sheets API"
-5. From the status bar above, select `Publish > Deploy as Web app...` and change the permissions under "Who has access to the app" so that MasterBird members can access it, then press "Update" (you will be asked to approve it after the update, so follow the instructions to approve it)
-6. Edit MasterBird/examples/extension-config.json with reference to [this](#about-extension-configjson) (use the URL that appears after the completion of step 5 of this procedure for applyUrl)
-7. Right-click on the configuration file in a location on Google Drive that your team members can access and upload the `extension-config.json` that you edited in `Upload files`
-8. Right-click on the uploaded `extension-config.json`, select `Get shareable link`, and note the `XXXXXXX` part of `https://drive.google.com/open?id=XXXXXXX` as the ID (it will be required as Config File Id when the Chrome extension is installed)
+4. (optional) In line 8 of the `apply.gs`, enter your password like `const password = "Enter a random password here";` (it will be required as Apply Password when the Chrome extension is installed)
+5. From the status bar above, go to `Resources > Advanced Google services...` and turn on "Google Sheets API"
+6. From the status bar above, select `Publish > Deploy as Web app...` and change the permissions under "Who has access to the app" so that MasterBird members can access it, then press "Update"
+7. You will be asked to approve it after the update, so follow the instructions to approve it
+8. Edit MasterBird/examples/extension-config.json with reference to [this](#about-extension-configjson) (use the URL that appears after the completion of step 5 of this procedure for applyUrl)
+9. Right-click on the configuration file in a location on Google Drive that your team members can access and upload the `extension-config.json` that you edited in `Upload files`
+10. Right-click on the uploaded `extension-config.json`, select `Get shareable link`, and note the `XXXXXXX` part of `https://drive.google.com/open?id=XXXXXXX` as the ID (it will be required as Config File Id when the Chrome extension is installed)
 
 ### All members
 
