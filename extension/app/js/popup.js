@@ -89,7 +89,7 @@ const initializeApplySelectizes = () => {
         popupObject.applySpreadsheetsSelectize.disable();
       }
 
-      popupObject.baseSheetSelectize = $("#select-base-sheet").selectize({
+      popupObject.targetSheetSelectize = $("#select-target-sheet").selectize({
         persist: false,
         create: (input) => {
           return {
@@ -257,8 +257,8 @@ const initializeButtons = async () => {
 
       return;
     }
-    if (popupObject.baseSheetSelectize.items.length === 0) {
-      await alertOnBackground("Select base sheet.");
+    if (popupObject.targetSheetSelectize.items.length === 0) {
+      await alertOnBackground("Select target sheet.");
 
       return;
     }
@@ -268,7 +268,7 @@ const initializeButtons = async () => {
       startLoading("#btn-apply", "Applying");
       callBackgroundFunction("apply", {
         spreadsheetIds: popupObject.applySpreadsheetsSelectize.items,
-        baseSheetName: popupObject.baseSheetSelectize.items[0],
+        targetSheetName: popupObject.targetSheetSelectize.items[0],
         overlaySheetNames: popupObject.overlaySheetsSelectize.items,
         callback: () => {
           stopLoading("#btn-apply", "Apply");

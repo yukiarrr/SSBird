@@ -89,7 +89,7 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
 
 1. Create the sheet and data that you want to reflect in Spreadsheet
 2. Press the MasterBird icon at the top right
-3. Select the sheet you want to reflect in the "Base Sheet"
+3. Select the sheet you want to reflect in the "Target Sheet"
 4. press "Apply"
 5. if "Success 🎉" comes up, it's a success!
 
@@ -97,7 +97,7 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
 
 1. In Spreadsheet, create a sheet to overwrite the data separately from the sheet you want to reflect (please write a column in the sheet for overwriting)
 2. Please write only the data you want to overwrite in the sheet you want to overwrite
-3. Select the sheet you want to reflect in the "Base Sheet"
+3. Select the sheet you want to reflect in the "Target Sheet"
 4. Select the sheet describing the data to be overwritten in "Overlay Sheets" (multiple selections are possible, and the data will be overwritten in the order of selection)
 5. press "Apply"
 6. if "Success 🎉" comes up, it's a success!
@@ -106,7 +106,7 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
 
 1. Go to the Google Drive folder screen that contains the Spreadsheet you want to reflect.
 2. In the 'Apply Spreadsheets' section, select the spreadsheet you want to reflect.
-3. As for "Base Sheet" and "Overlay Sheets", it is the same as [Merge sheets and push it to GitHub](#merge-sheets-and-push-it-to-github), and is applied to all selected Spreadsheets.
+3. As for "Target Sheet" and "Overlay Sheets", it is the same as [Merge sheets and push it to GitHub](#merge-sheets-and-push-it-to-github), and is applied to all selected Spreadsheets.
 4. press "Apply".
 5. if "Success 🎉" comes up, it's a success!
 
@@ -115,12 +115,12 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
 ### Basic rules
 
 - If the Spreadsheet name is example, it will be example.csv on GitHub
-- If the base sheet name is develop, the csv will be pushed to the develop branch
+- If the target sheet name is develop, the csv will be pushed to the develop branch
 - Data columns should be written with no spaces on the left and top (A1,B1,C1...)
 - Cells with blank A columns or 1 rows will be ignored in both merging sheets and converting csv, so please use this when making notes (if you're making notes in B3, leave A3 or B1 blank)
 
 ### Rules for merging sheets
 
 - Cells in column A (A1,A2,A3...) is the same, it is assumed to be the same data and overwritten, if not, it is added to the bottom as new data
-- If the data is overwritten, it is not a problem even if the order of the data columns other than column A is different between the base sheet and the sheet describing the data to be overwritten because the data is overwritten based on the data column
-- If the sheet containing the data to be overwritten has a new data column that is not in the base sheet, new data column will be added
+- If the data is overwritten, it is not a problem even if the order of the data columns other than column A is different between the target sheet and the sheet describing the data to be overwritten because the data is overwritten based on the data column
+- If the sheet containing the data to be overwritten has a new data column that is not in the target sheet, new data column will be added

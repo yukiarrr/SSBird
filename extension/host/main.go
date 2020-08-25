@@ -34,12 +34,12 @@ type Csv struct {
 }
 
 type Request struct {
-	FunctionType   FunctionType `json:"functionType"`
-	RepositoryUrl  string       `json:"repositoryUrl"`
-	BaseBranchName string       `json:"baseBranchName"`
-	Username       string       `json:"username"`
-	Email          string       `json:"email"`
-	Csvs           []Csv        `json:"csvs"`
+	FunctionType     FunctionType `json:"functionType"`
+	RepositoryUrl    string       `json:"repositoryUrl"`
+	TargetBranchName string       `json:"targetBranchName"`
+	Username         string       `json:"username"`
+	Email            string       `json:"email"`
+	Csvs             []Csv        `json:"csvs"`
 }
 
 type Response struct {
@@ -68,7 +68,7 @@ func main() {
 				continue
 			}
 		case Apply:
-			err = apply(req.BaseBranchName, req.Username, req.Email, req.Csvs)
+			err = apply(req.TargetBranchName, req.Username, req.Email, req.Csvs)
 			if err == nil {
 				sendMessage([]byte("{}"))
 				continue
@@ -93,14 +93,14 @@ func initialize(repositoryUrl string) error {
 	return err
 }
 
-func apply(baseBranchName string, username string, email string, csvs []Csv) error {
+func apply(targetBranchName string, username string, email string, csvs []Csv) error {
 	branchs, err := repository.Branches()
 	if err != nil {
 		return err
 	}
 	branchs.ForEach(func(branch *plumbing.Reference) error {
-		if branch.Name().String() == "refs/heads/"+baseBranchName {
-			err = repository.DeleteBranch(baseBranchName)
+		if branch.Name().String() == "refs/heads/"+targetBranchName {
+			err = repository.DeleteBranch(targetBranchName)
 			return err
 		}
 		return nil
@@ -112,10 +112,10 @@ func apply(baseBranchName string, username string, email string, csvs []Csv) err
 	if err != nil {
 		return err
 	}
-	remoteRef, err := repository.Reference(plumbing.ReferenceName("refs/remotes/origin/"+baseBranchName), true)
+	remoteRef, err := repository.Reference(plumbing.ReferenceName("refs/remotes/origin/"+targetBranchName), true)
 	var refName plumbing.ReferenceName
 	if err == nil {
-		newRef := plumbing.NewHashReference(plumbing.ReferenceName(baseBranchName), remoteRef.Hash())
+		newRef := plumbing.NewHashReference(plumbing.ReferenceName(targetBranchName), remoteRef.Hash())
 		repository.Storer.SetReference(newRef)
 		refName = newRef.Name()
 		err = w.Checkout(&git.CheckoutOptions{
@@ -127,7 +127,7 @@ func apply(baseBranchName string, username string, email string, csvs []Csv) err
 			return err
 		}
 	} else {
-		refName = plumbing.ReferenceName(baseBranchName)
+		refName = plumbing.ReferenceName(targetBranchName)
 		err = w.Checkout(&git.CheckoutOptions{
 			Branch: refName,
 			Create: true,
@@ -170,7 +170,7 @@ func apply(baseBranchName string, username string, email string, csvs []Csv) err
 		return err
 	}
 
-	repository.Storer.SetReference(plumbing.NewReferenceFromStrings(baseBranchName, hash.String()))
+	repository.Storer.SetReference(plumbing.NewReferenceFromStrings(targetBranchName, hash.String()))
 
 	remote, err := repository.Remote("origin")
 	if err != nil {
@@ -178,7 +178,7 @@ func apply(baseBranchName string, username string, email string, csvs []Csv) err
 	}
 	err = remote.Push(&git.PushOptions{
 		RefSpecs: []config.RefSpec{
-			config.RefSpec(refName + ":" + plumbing.ReferenceName("refs/heads/"+baseBranchName)),
+			config.RefSpec(refName + ":" + plumbing.ReferenceName("refs/heads/"+targetBranchName)),
 		},
 	})
 	if err != nil {

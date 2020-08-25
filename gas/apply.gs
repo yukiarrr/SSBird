@@ -12,7 +12,7 @@ const password = "";
 function doPost(e) {
   const {
     spreadsheetId,
-    baseSheetName,
+    targetSheetName,
     overlaySheetNames,
     rootFolderId,
     applyPassword,
@@ -25,7 +25,7 @@ function doPost(e) {
 
   const { csvValue, merged } = mergeSheets(
     spreadsheetId,
-    baseSheetName,
+    targetSheetName,
     overlaySheetNames
   );
   if (merged) {
@@ -41,17 +41,17 @@ function doPost(e) {
   return output;
 }
 
-function mergeSheets(spreadsheetId, baseSheetName, overlaySheetNames) {
+function mergeSheets(spreadsheetId, targetSheetName, overlaySheetNames) {
   const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
-  let baseSheet = spreadsheet.getSheetByName(baseSheetName);
-  if (!baseSheet) {
-    baseSheet = spreadsheet.insertSheet(baseSheetName);
+  let targetSheet = spreadsheet.getSheetByName(targetSheetName);
+  if (!targetSheet) {
+    targetSheet = spreadsheet.insertSheet(targetSheetName);
   }
 
   if (overlaySheetNames.length === 0) {
-    // Base sheet only
+    // Target sheet only
     return {
-      csvValue: valuesToCsvs(baseSheet.getDataRange().getValues()),
+      csvValue: valuesToCsvs(targetSheet.getDataRange().getValues()),
       merged: true,
     };
   }
@@ -59,7 +59,7 @@ function mergeSheets(spreadsheetId, baseSheetName, overlaySheetNames) {
   let merged = false;
 
   for (const overlaySheetName of overlaySheetNames) {
-    if (overlaySheetName === baseSheetName) {
+    if (overlaySheetName === targetSheetName) {
       continue;
     }
 
@@ -68,9 +68,9 @@ function mergeSheets(spreadsheetId, baseSheetName, overlaySheetNames) {
       continue;
     }
 
-    let baseValues = baseSheet.getDataRange().getValues();
+    let targetValues = targetSheet.getDataRange().getValues();
     const overlayValues = overlaySheet.getDataRange().getValues();
-    let firstBaseValue = baseValues[0];
+    let firstTargetValue = targetValues[0];
     const firstOverlayValue = overlayValues[0];
     const insertColumnIndices = [];
 
@@ -82,26 +82,26 @@ function mergeSheets(spreadsheetId, baseSheetName, overlaySheetNames) {
       const overlayColumnValue = firstOverlayValue[overlayColumnIndex];
       if (
         overlayColumnValue &&
-        !firstBaseValue.some((value) => value == overlayColumnValue)
+        !firstTargetValue.some((value) => value == overlayColumnValue)
       ) {
         insertColumnIndices.push(overlayColumnIndex);
       }
     }
 
-    const baseSheetId = baseSheet.getSheetId();
-    const isEmptyBaseSheet = isEmptySheet(baseValues);
+    const targetSheetId = targetSheet.getSheetId();
+    const isEmptyTargetSheet = isEmptySheet(targetValues);
     const columnRequests = [];
     let insertColumns = 0;
 
     for (const insertColumnIndex of insertColumnIndices) {
       if (
-        !isEmptyBaseSheet &&
-        insertColumnIndex < firstBaseValue.length + insertColumns
+        !isEmptyTargetSheet &&
+        insertColumnIndex < firstTargetValue.length + insertColumns
       ) {
         columnRequests.push({
           insertDimension: {
             range: {
-              sheetId: baseSheetId,
+              sheetId: targetSheetId,
               dimension: "COLUMNS",
               startIndex: insertColumnIndex,
               endIndex: insertColumnIndex + 1,
@@ -126,7 +126,7 @@ function mergeSheets(spreadsheetId, baseSheetName, overlaySheetNames) {
           ],
           fields: "userEnteredValue",
           range: {
-            sheetId: baseSheetId,
+            sheetId: targetSheetId,
             startRowIndex: 0,
             endRowIndex: 1,
             startColumnIndex: insertColumnIndex,
@@ -144,8 +144,8 @@ function mergeSheets(spreadsheetId, baseSheetName, overlaySheetNames) {
 
       SpreadsheetApp.flush();
 
-      baseValues = baseSheet.getDataRange().getValues();
-      firstBaseValue = baseValues[0];
+      targetValues = targetSheet.getDataRange().getValues();
+      firstTargetValue = targetValues[0];
     }
 
     const rowData = [];
@@ -164,12 +164,12 @@ function mergeSheets(spreadsheetId, baseSheetName, overlaySheetNames) {
       let matched = false;
 
       for (
-        let baseRowIndex = 0;
-        baseRowIndex < baseValues.length;
-        baseRowIndex++
+        let targetRowIndex = 0;
+        targetRowIndex < targetValues.length;
+        targetRowIndex++
       ) {
-        const baseValue = baseValues[baseRowIndex];
-        if (overlayValue[0] == baseValue[0]) {
+        const targetValue = targetValues[targetRowIndex];
+        if (overlayValue[0] == targetValue[0]) {
           matched = true;
 
           for (
@@ -178,19 +178,20 @@ function mergeSheets(spreadsheetId, baseSheetName, overlaySheetNames) {
             overlayColumnIndex++
           ) {
             for (
-              let baseColumnIndex = 1;
-              baseColumnIndex < baseValue.length;
-              baseColumnIndex++
+              let targetColumnIndex = 1;
+              targetColumnIndex < targetValue.length;
+              targetColumnIndex++
             ) {
               if (
-                firstBaseValue[baseColumnIndex] &&
-                firstBaseValue[baseColumnIndex] ==
+                firstTargetValue[targetColumnIndex] &&
+                firstTargetValue[targetColumnIndex] ==
                   firstOverlayValue[overlayColumnIndex] &&
-                baseValue[baseColumnIndex] !== overlayValue[overlayColumnIndex]
+                targetValue[targetColumnIndex] !==
+                  overlayValue[overlayColumnIndex]
               ) {
                 rowData.push({
-                  range: `${baseSheetName}!${
-                    columnToLetter(baseColumnIndex + 1) + (baseRowIndex + 1)
+                  range: `${targetSheetName}!${
+                    columnToLetter(targetColumnIndex + 1) + (targetRowIndex + 1)
                   }`,
                   values: [[overlayValue[overlayColumnIndex]]],
                 });
@@ -205,13 +206,13 @@ function mergeSheets(spreadsheetId, baseSheetName, overlaySheetNames) {
       if (!matched) {
         addRows++;
 
-        const dataRows = baseValues.length + addRows;
+        const dataRows = targetValues.length + addRows;
         rowData.push({
-          range: `${baseSheetName}!${columnToLetter(1) + dataRows}:${
-            columnToLetter(firstBaseValue.length) + dataRows
+          range: `${targetSheetName}!${columnToLetter(1) + dataRows}:${
+            columnToLetter(firstTargetValue.length) + dataRows
           }`,
           values: [
-            firstBaseValue.map((value) =>
+            firstTargetValue.map((value) =>
               value
                 ? overlayValue.find(
                     (element, index) => firstOverlayValue[index] == value
@@ -223,10 +224,10 @@ function mergeSheets(spreadsheetId, baseSheetName, overlaySheetNames) {
       }
     }
 
-    const newRows = baseValues.length + addRows;
-    const currentMaxRows = baseSheet.getMaxRows();
+    const newRows = targetValues.length + addRows;
+    const currentMaxRows = targetSheet.getMaxRows();
     if (currentMaxRows < newRows) {
-      baseSheet.insertRows(currentMaxRows, newRows - currentMaxRows);
+      targetSheet.insertRows(currentMaxRows, newRows - currentMaxRows);
     }
 
     if (rowData.length > 0) {
@@ -245,7 +246,7 @@ function mergeSheets(spreadsheetId, baseSheetName, overlaySheetNames) {
   }
 
   return {
-    csvValue: valuesToCsvs(baseSheet.getDataRange().getValues()),
+    csvValue: valuesToCsvs(targetSheet.getDataRange().getValues()),
     merged: merged,
   };
 }
@@ -268,8 +269,8 @@ function ignoresRow(row) {
   return !Boolean(row[0]);
 }
 
-function isEmptySheet(baseValues) {
-  return !Boolean(baseValues[0][0]);
+function isEmptySheet(targetValues) {
+  return !Boolean(targetValues[0][0]);
 }
 
 function columnToLetter(column) {
