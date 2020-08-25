@@ -217,12 +217,13 @@ const initializeButtons = async () => {
 
   let isInitializing = await getBackgroundVariable("isInitializing");
 
-  $("#btn-save").click(() => {
+  $("#btn-save").click(async () => {
     if (isInitializing) {
       return;
     }
 
-    if (confirm("Save?")) {
+    const result = await confirmOnBackground("Save?");
+    if (result) {
       startLoading("#btn-save", "Saving");
       callBackgroundFunction("initialize", {
         gitHubUsername: popupObject.gitHubUsernameSelectize.items[0],
@@ -262,7 +263,8 @@ const initializeButtons = async () => {
       return;
     }
 
-    if (confirm("Apply?")) {
+    const result = await confirmOnBackground("Apply?");
+    if (result) {
       startLoading("#btn-apply", "Applying");
       callBackgroundFunction("apply", {
         spreadsheetIds: popupObject.applySpreadsheetsSelectize.items,
