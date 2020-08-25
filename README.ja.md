@@ -37,11 +37,13 @@ Chrome拡張だけで、Spreadsheetのシート同士をマージし、それを
 1. [Releases](https://github.com/yukiarrr/MasterBird/releases)から、使用したいバージョンの`MasterBird-vX.X.X.Server.zip`をダウンロードし、解凍してください
 2. スクリプトを保存したいGoogle Drive上の場所で右クリックし、`その他 > Google Apps Script`を選択してください
 3. コードエディタが開くので、`MasterBird/gas/apply.gs`のコードで上書き後に保存してください
-4. 上のステータスバーから、`リソース > Google の拡張サービス...`を選択し、「Google Sheets API」をONにしてください
-5. 上のステータスバーから、`公開 > ウェブ アプリケーションとして導入...`を選択し、「Who has access to the app」でMasterBirdを使用するメンバーがアクセスできるように権限を変更してから「更新」を押してください（更新後に承認を求められるので、説明に従って承認してください）
-6. [こちら](#extension-configjsonについて)を参考に、`MasterBird/examples/extension-config.json`を編集します（applyUrlはこの手順の5の完了後に表示されるURLを使用してください）
-7. 設定ファイルをチームメンバーがアクセスできるGoogle Drive上の場所で右クリックし、`ファイルをアップロード`で編集した`extension-config.json`をアップロードします
-8. アップロードした`extension-config.json`を右クリックし、`共有可能なリンクを取得`を選択し、取得した`https://drive.google.com/open?id=XXXXXXX`のうち、`XXXXXXX`の部分をIDとしてメモしてください（Chrome拡張導入時にConfig File Idとして必要となります）
+4. （省略可能）`apply.gs`の8行目に、`const password = "ここにランダムなパスワードを入力";`のようにパスワードを入力してください（Chrome拡張導入時にApply Passwordとして必要となります）
+5. 上のステータスバーから、`リソース > Google の拡張サービス...`を選択し、「Google Sheets API」をONにしてください
+6. 上のステータスバーから、`公開 > ウェブ アプリケーションとして導入...`を選択し、「Who has access to the app」でMasterBirdを使用するメンバーがアクセスできるように権限を変更してから「更新」を押してください
+7. 更新後に承認を求められるので、説明に従って承認してください
+8. [こちら](#extension-configjsonについて)を参考に、`MasterBird/examples/extension-config.json`を編集します（applyUrlはこの手順の5の完了後に表示されるURLを使用してください）
+9. 設定ファイルをチームメンバーがアクセスできるGoogle Drive上の場所で右クリックし、`ファイルをアップロード`で編集した`extension-config.json`をアップロードします
+10. アップロードした`extension-config.json`を右クリックし、`共有可能なリンクを取得`を選択し、取得した`https://drive.google.com/open?id=XXXXXXX`のうち、`XXXXXXX`の部分をIDとしてメモしてください（Chrome拡張導入時にConfig File Idとして必要となります）
 
 ### 全メンバー
 

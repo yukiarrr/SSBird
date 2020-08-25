@@ -2,14 +2,26 @@
 // https://github.com/yukiarrr/MasterBird
 // MIT License
 
+/* =================================== */
+
+// Change only here
+const password = "";
+
+/* =================================== */
+
 function doPost(e) {
   const {
     spreadsheetId,
     baseSheetName,
     overlaySheetNames,
     rootFolderId,
+    applyPassword,
   } = JSON.parse(decodeURI(e.postData.getDataAsString()));
   const response = {};
+
+  if (applyPassword !== password) {
+    throw new Error("Wrong password.");
+  }
 
   const { csvValue, merged } = mergeSheets(
     spreadsheetId,

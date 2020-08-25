@@ -90,6 +90,7 @@ backgroundObject.apply = async (args) => {
           baseSheetName: baseSheetName,
           overlaySheetNames: overlaySheetNames,
           rootFolderId: backgroundObject.rootFolderId,
+          applyPassword: backgroundObject.applyPassword,
         }),
         dataType: "json",
       });
