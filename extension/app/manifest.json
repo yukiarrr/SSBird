@@ -19,8 +19,8 @@
   "content_scripts": [
     {
       "matches": [
-        "https://docs.google.com/spreadsheets/d/*",
-        "https://drive.google.com/drive/u/*/folders/*"
+        "https://docs.google.com/spreadsheets/*",
+        "https://drive.google.com/drive/*"
       ],
       "js": ["js/jquery-3.5.0.min.js", "js/contents.js"]
     }
