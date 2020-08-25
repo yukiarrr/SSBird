@@ -23,6 +23,7 @@ type SyncRequest struct {
 	SheetName       string `json:"sheetName"`
 	RootFolderId    string `json:"rootFolderId"`
 	SpreadsheetPath string `json:"spreadsheetPath"`
+	SyncPassword    string `json:"syncPassword"`
 }
 
 var sheetName, csvPath string
@@ -99,6 +100,7 @@ func sync() error {
 		spreadsheetPath = spreadsheetPath[:len(spreadsheetPath)-len(csvSuffix)]
 	}
 	syncRequest.SpreadsheetPath = spreadsheetPath
+	syncRequest.SyncPassword = viper.GetString("syncPassword")
 	syncRequestJson, _ := json.Marshal(syncRequest)
 	googleAccessToken, err := getGoogleAccessToken()
 	if err != nil {

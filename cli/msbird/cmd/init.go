@@ -28,7 +28,8 @@ The json keys required in config are as follows.
   "syncUrl": "https://script.google.com/XXXXXXX/exec",
   "repositoryUrl": "https://github.com/XXXXXXX/XXXXXXX",
   "rootFolderId": "XXXXXXX",
-  "gitHubAccessToken": "XXXXXXX",
+  "gitHubAccessToken": "",
+  "syncPassword": "",
   "googleClientSecret": "XXXXXXX",
   "googleClientId": "XXXXXXX",
   "googleRefreshToken": "XXXXXXX"
@@ -45,7 +46,8 @@ The json keys required in config are as follows.
   "syncUrl": "https://script.google.com/XXXXXXX/exec",
   "repositoryUrl": "https://github.com/XXXXXXX/XXXXXXX",
   "rootFolderId": "XXXXXXX",
-  "gitHubAccessToken": "XXXXXXX"
+  "gitHubAccessToken": "",
+  "syncPassword": ""
 }
 
 service-account is the json downloaded after creating Service Account.`,

@@ -133,10 +133,12 @@ const initializeConfigSelectizes = async () => {
     "gitHubEmail",
     "gitHubAccessToken",
     "configFileId",
+    "applyPassword",
     "inputGitHubUsernames",
     "inputGitHubEmails",
     "inputGitHubAccessTokens",
     "inputConfigFileIds",
+    "inputApplyPasswords",
   ]);
 
   selectConfigSelectizes.show();
@@ -193,6 +195,12 @@ const initializeConfigSelectizes = async () => {
     "inputConfigFileIds",
     "configFileId"
   );
+  initializeConfigSelectize(
+    "applyPasswordSelectize",
+    "#select-apply-password",
+    "inputApplyPasswords",
+    "applyPassword"
+  );
 };
 
 const initializeButtons = async () => {
@@ -219,8 +227,10 @@ const initializeButtons = async () => {
       callBackgroundFunction("initialize", {
         gitHubUsername: popupObject.gitHubUsernameSelectize.items[0],
         gitHubEmail: popupObject.gitHubEmailSelectize.items[0],
-        gitHubAccessToken: popupObject.gitHubAccessTokenSelectize.items[0],
+        gitHubAccessToken:
+          popupObject.gitHubAccessTokenSelectize.items[0] ?? "",
         configFileId: popupObject.configFileIdSelectize.items[0],
+        applyPassword: popupObject.applyPasswordSelectize.items[0] ?? "",
         callback: () => {
           close();
         },
