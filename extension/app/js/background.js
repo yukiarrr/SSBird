@@ -67,7 +67,7 @@ backgroundObject.apply = async (args) => {
     return;
   }
 
-  const { spreadsheetIds, baseSheetName, overlaySheetNames, callback } = args;
+  const { spreadsheetIds, targetSheetName, overlaySheetNames, callback } = args;
   backgroundObject.applyCallback = callback;
   backgroundObject.isApplying = true;
 
@@ -87,7 +87,7 @@ backgroundObject.apply = async (args) => {
         url: backgroundObject.applyUrl,
         data: JSON.stringify({
           spreadsheetId: spreadsheetId,
-          baseSheetName: baseSheetName,
+          targetSheetName: targetSheetName,
           overlaySheetNames: overlaySheetNames,
           rootFolderId: backgroundObject.rootFolderId,
           applyPassword: backgroundObject.applyPassword,
@@ -127,7 +127,7 @@ backgroundObject.apply = async (args) => {
 
   port.postMessage({
     functionType: FunctionType.Apply,
-    baseBranchName: baseSheetName,
+    targetBranchName: targetSheetName,
     username: backgroundObject.gitHubUsername,
     email: backgroundObject.gitHubEmail,
     csvs: csvs,
