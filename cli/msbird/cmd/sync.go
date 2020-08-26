@@ -137,15 +137,19 @@ func request(method string, url string, token string, json []byte) (string, erro
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return "", err
+	}
 	bodyStr := string(body)
 
 	const maxLength = 3000
-	if len(bodyStr) > maxLength {
-		bodyStr = bodyStr[:maxLength] + "..."
+	cutStr := bodyStr
+	if len(cutStr) > maxLength {
+		cutStr = cutStr[:maxLength] + "..."
 	}
-	fmt.Println(string(bodyStr))
+	fmt.Println(cutStr)
 
-	return bodyStr, err
+	return bodyStr, nil
 }
 
 func getGoogleAccessToken() (string, error) {
