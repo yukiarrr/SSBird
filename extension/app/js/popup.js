@@ -252,7 +252,10 @@ const initializeButtons = async () => {
     $(element).empty().removeClass("btn-progress").append(defaultText);
   };
 
-  let isInitializing = await getBackgroundVariable("isInitializing");
+  const isInitializing = await getBackgroundVariable("isInitializing");
+  if (isInitializing) {
+    startLoading("#btn-save", "Saving");
+  }
 
   $("#btn-save").click(async () => {
     if (isInitializing) {
@@ -265,8 +268,7 @@ const initializeButtons = async () => {
       callBackgroundFunction("initialize", {
         gitHubUsername: popupObject.gitHubUsernameSelectize.items[0],
         gitHubEmail: popupObject.gitHubEmailSelectize.items[0],
-        gitHubAccessToken:
-          popupObject.gitHubAccessTokenSelectize.items[0] ?? "",
+        gitHubAccessToken: popupObject.gitHubAccessTokenSelectize.items[0],
         configFileId: popupObject.configFileIdSelectize.items[0],
         applyPassword: popupObject.applyPasswordSelectize.items[0] ?? "",
         callback: () => {
@@ -276,7 +278,10 @@ const initializeButtons = async () => {
     }
   });
 
-  let isApplying = false;
+  let isApplying = await getBackgroundVariable("isApplying");
+  if (isApplying) {
+    startLoading("#btn-apply", "Applying");
+  }
 
   $("#btn-apply").click(async () => {
     if (isApplying) {
@@ -316,16 +321,6 @@ const initializeButtons = async () => {
       isApplying = true;
     }
   });
-
-  isInitializing = await getBackgroundVariable("isInitializing");
-  if (isInitializing) {
-    startLoading("#btn-save", "Saving");
-  }
-
-  isApplying = await getBackgroundVariable("isApplying");
-  if (isApplying) {
-    startLoading("#btn-apply", "Applying");
-  }
 };
 
 initializeCSS();
