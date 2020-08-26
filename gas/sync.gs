@@ -52,7 +52,7 @@ function sync(csvValue, sheetName, rootFolderId, spreadsheetPath) {
   if (!sheet) {
     sheet = spreadsheet.insertSheet(sheetName);
   }
-  const values = Utilities.parseCsv(csvValue);
+  const values = parseCsv(csvValue);
 
   sheet.clearContents();
   sheet.getRange(1, 1, values.length, values[0].length).setValues(values);
@@ -135,4 +135,34 @@ function getIdByPath(rootFolderId, spreadsheetPath) {
 
 function getNameBySpreadsheetPath(spreadsheetPath) {
   return spreadsheetPath.split("/").slice(-1)[0];
+}
+
+// NOTE: https://qiita.com/weal/items/5aa94235c40d60ef2f0c
+function parseCsv(csv) {
+  const re = new RegExp(
+    '"(?:[^"]|"")*"|"(?:[^"]|"")*$|[^,\r\n]+|\r?\n|\r|,+',
+    "g"
+  );
+  let c,
+    m,
+    n,
+    r = [[""]];
+  if (!csv) {
+    return [];
+  }
+  while ((m = re.exec(csv))) {
+    if ((c = m[0].charAt(0)) === ",") {
+      for (c = m[0].length; c > 0; c--) {
+        r[r.length - 1].push("");
+      }
+      continue;
+    }
+    if (c === "\n" || c === "\r\n" || c === "\r") {
+      r.push([""]);
+      continue;
+    }
+    (n = r[r.length - 1])[n.length - 1] =
+      c === '"' ? m[0].replace(/^"|"$/g, "").replace(/""/g, '"') : m[0];
+  }
+  return r;
 }
