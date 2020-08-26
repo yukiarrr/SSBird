@@ -67,7 +67,13 @@ backgroundObject.apply = async (args) => {
     return;
   }
 
-  const { spreadsheetIds, targetSheetName, overlaySheetNames, callback } = args;
+  const {
+    spreadsheetIds,
+    targetSheetName,
+    overlaySheetNames,
+    baseBranchName,
+    callback,
+  } = args;
   backgroundObject.applyCallback = callback;
   backgroundObject.isApplying = true;
 
@@ -125,9 +131,11 @@ backgroundObject.apply = async (args) => {
     return;
   }
 
+  const baseBranchNames = [baseBranchName].concat(overlaySheetNames);
   port.postMessage({
     functionType: FunctionType.Apply,
     targetBranchName: targetSheetName,
+    baseBranchNames: baseBranchNames,
     username: backgroundObject.gitHubUsername,
     email: backgroundObject.gitHubEmail,
     csvs: csvs,

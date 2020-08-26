@@ -37,6 +37,7 @@ type Request struct {
 	FunctionType     FunctionType `json:"functionType"`
 	RepositoryUrl    string       `json:"repositoryUrl"`
 	TargetBranchName string       `json:"targetBranchName"`
+	BaseBranchNames  []string     `json:"baseBranchNames"`
 	Username         string       `json:"username"`
 	Email            string       `json:"email"`
 	Csvs             []Csv        `json:"csvs"`
@@ -68,7 +69,7 @@ func main() {
 				continue
 			}
 		case Apply:
-			err = apply(req.TargetBranchName, req.Username, req.Email, req.Csvs)
+			err = apply(req.TargetBranchName, req.BaseBranchNames, req.Username, req.Email, req.Csvs)
 			if err == nil {
 				sendMessage([]byte("{}"))
 				continue
@@ -93,49 +94,56 @@ func initialize(repositoryUrl string) error {
 	return err
 }
 
-func apply(targetBranchName string, username string, email string, csvs []Csv) error {
-	branchs, err := repository.Branches()
+func apply(targetBranchName string, baseBranchNames []string, username string, email string, csvs []Csv) error {
+	refs, err := repository.References()
 	if err != nil {
 		return err
 	}
-	branchs.ForEach(func(branch *plumbing.Reference) error {
-		if branch.Name().String() == "refs/heads/"+targetBranchName {
-			err = repository.DeleteBranch(targetBranchName)
+	refs.ForEach(func(ref *plumbing.Reference) error {
+		if strings.HasPrefix(ref.Name().String(), "refs/remotes/origin/") {
+			err = repository.Storer.RemoveReference(ref.Name())
 			return err
 		}
 		return nil
 	})
-
 	repository.Fetch(&git.FetchOptions{})
+
+	targetRef, err := repository.Storer.Reference(plumbing.ReferenceName(targetBranchName))
+	if err == nil {
+		err = repository.Storer.RemoveReference(targetRef.Name())
+		if err != nil {
+			return err
+		}
+	}
 
 	w, err := repository.Worktree()
 	if err != nil {
 		return err
 	}
-	remoteRef, err := repository.Reference(plumbing.ReferenceName("refs/remotes/origin/"+targetBranchName), true)
-	var refName plumbing.ReferenceName
+
+	remoteRef, err := repository.Reference(plumbing.NewRemoteReferenceName("origin", targetBranchName), true)
+	var coHash plumbing.Hash
 	if err == nil {
-		newRef := plumbing.NewHashReference(plumbing.ReferenceName(targetBranchName), remoteRef.Hash())
-		repository.Storer.SetReference(newRef)
-		refName = newRef.Name()
-		err = w.Checkout(&git.CheckoutOptions{
-			Branch: refName,
-			Create: false,
-			Force:  true,
-		})
-		if err != nil {
-			return err
-		}
+		coHash = remoteRef.Hash()
 	} else {
-		refName = plumbing.ReferenceName(targetBranchName)
-		err = w.Checkout(&git.CheckoutOptions{
-			Branch: refName,
-			Create: true,
-			Force:  true,
-		})
-		if err != nil {
-			return err
+		for _, baseBranchName := range baseBranchNames {
+			baseRef, err := repository.Reference(plumbing.NewRemoteReferenceName("origin", baseBranchName), true)
+			if err == nil {
+				coHash = baseRef.Hash()
+				break
+			}
 		}
+	}
+
+	refName := plumbing.ReferenceName(targetBranchName)
+	err = w.Checkout(&git.CheckoutOptions{
+		Hash:   coHash,
+		Branch: refName,
+		Create: true,
+		Force:  true,
+	})
+	if err != nil {
+		return err
 	}
 
 	var addedCsvPaths []string
@@ -159,7 +167,7 @@ func apply(targetBranchName string, username string, email string, csvs []Csv) e
 		return fmt.Errorf("%s", "Not changed.")
 	}
 
-	hash, err := w.Commit("Update "+strings.Join(addedCsvPaths, ", "), &git.CommitOptions{
+	cHash, err := w.Commit("Update "+strings.Join(addedCsvPaths, ", "), &git.CommitOptions{
 		Author: &object.Signature{
 			Name:  username,
 			Email: email,
@@ -170,7 +178,7 @@ func apply(targetBranchName string, username string, email string, csvs []Csv) e
 		return err
 	}
 
-	repository.Storer.SetReference(plumbing.NewReferenceFromStrings(targetBranchName, hash.String()))
+	repository.Storer.SetReference(plumbing.NewHashReference(plumbing.ReferenceName(targetBranchName), cHash))
 
 	remote, err := repository.Remote("origin")
 	if err != nil {
