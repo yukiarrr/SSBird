@@ -120,6 +120,16 @@ const initializeApplySelectizes = () => {
           text: name,
         })),
       })[0].selectize;
+
+      popupObject.baseBranchSelectize = $("#select-base-branch").selectize({
+        persist: false,
+        create: (input) => {
+          return {
+            value: input,
+            text: input,
+          };
+        },
+      })[0].selectize;
     });
   });
 };
@@ -270,6 +280,7 @@ const initializeButtons = async () => {
         spreadsheetIds: popupObject.applySpreadsheetsSelectize.items,
         targetSheetName: popupObject.targetSheetSelectize.items[0],
         overlaySheetNames: popupObject.overlaySheetsSelectize.items,
+        baseBranchName: popupObject.baseBranchSelectize.items[0] ?? "",
         callback: () => {
           stopLoading("#btn-apply", "Apply");
           isApplying = false;
