@@ -131,7 +131,7 @@ backgroundObject.apply = async (args) => {
     return;
   }
 
-  const baseBranchNames = [baseBranchName];
+  const baseBranchNames = [baseBranchName].concat(overlaySheetNames);
   port.postMessage({
     functionType: FunctionType.Apply,
     targetBranchName: targetSheetName,
