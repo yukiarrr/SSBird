@@ -240,9 +240,9 @@ function mergeSheets(spreadsheetId, targetSheetName, overlaySheetNames) {
       );
 
       SpreadsheetApp.flush();
-
-      merged = true;
     }
+
+    merged = true;
   }
 
   return {
