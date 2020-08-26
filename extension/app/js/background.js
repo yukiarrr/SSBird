@@ -106,6 +106,9 @@ backgroundObject.apply = async (args) => {
       alert(
         `Failed apply api.\nCheck applyUrl in extension-config.json.\n\n${e.responseText}`
       );
+      if (e.responseText.includes("Authorization needed")) {
+        window.open(backgroundObject.applyUrl);
+      }
 
       return;
     }
