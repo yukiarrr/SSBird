@@ -136,6 +136,10 @@ func request(method string, url string, token string, json []byte) (string, erro
 	}
 	defer resp.Body.Close()
 
+	if resp.StatusCode >= 400 {
+		return "", fmt.Errorf("Status Code: %d", resp.StatusCode)
+	}
+
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return "", err
