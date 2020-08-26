@@ -152,9 +152,9 @@ port.onMessage.addListener((message) => {
   if (!message.errorMessage) {
     if (!backgroundObject.isInitialized) {
       backgroundObject.isInitialized = true;
+    } else {
+      alert("Success 🎉");
     }
-
-    alert("Success 🎉");
   } else {
     alert(message.errorMessage);
   }
