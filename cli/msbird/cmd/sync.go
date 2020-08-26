@@ -10,6 +10,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -129,7 +130,7 @@ func request(method string, url string, token string, json []byte) (string, erro
 		req.Header.Set("Authorization", "Bearer "+token)
 	}
 
-	client := new(http.Client)
+	client := &http.Client{Timeout: time.Duration(360) * time.Second}
 	resp, err := client.Do(req)
 	if err != nil {
 		return "", err
