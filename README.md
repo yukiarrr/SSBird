@@ -4,6 +4,8 @@
 
 This is a master data management tool that can merge sheets in Spreadsheet and push it to GitHub as csv, using only the Chrome Extension.
 
+<p align="center"><img width="600" src="https://github.com/yukiarrr/MasterBird/raw/master/docs/images/masterbird.gif" alt="MasterBird gif"></p>
+
 ## 目次
 
 - [Overview](#Overview)
