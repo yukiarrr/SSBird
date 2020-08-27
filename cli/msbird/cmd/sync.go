@@ -40,7 +40,7 @@ msbird sync --csv-path csvs/example.csv --sheet-name develop
 In this example, create "csvs" folder and "example" spreadsheet in Google Drive if they don't exist,
 then create "develop" sheet if it doesn't exist and write the csv data to it.
 
-Note that csv-path for the argument must be relative to the repository.`,
+Note that --csv-path for the argument must be relative to the repository.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if err := readConfig(); err != nil {
 			fmt.Fprintln(os.Stderr, err)

@@ -22,7 +22,7 @@ The first,
 msbird init --config cli-config.json
 
 In this example, OAuth 2.0 is used to authorize Google API.
-The json keys required in config are as follows.
+The json keys required in --config are as follows.
 
 {
   "syncUrl": "https://script.google.com/XXXXXXX/exec",
@@ -30,8 +30,8 @@ The json keys required in config are as follows.
   "rootFolderId": "XXXXXXX",
   "gitHubAccessToken": "",
   "syncPassword": "",
-  "googleClientSecret": "XXXXXXX",
   "googleClientId": "XXXXXXX",
+  "googleClientSecret": "XXXXXXX",
   "googleRefreshToken": "XXXXXXX"
 }
 
@@ -40,7 +40,7 @@ The second,
 msbird init --config cli-config.json --service-account service-account.json
 
 In this example, Service Account is used to authorize Google API.
-The json keys required in config are as follows.
+The json keys required in --config are as follows.
 
 {
   "syncUrl": "https://script.google.com/XXXXXXX/exec",
