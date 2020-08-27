@@ -59,7 +59,7 @@ Chrome拡張だけで、Spreadsheetのシート同士をマージし、それを
 7. 管理者指定のGoogleアカウントでログインしてください
 8. Spreadsheetの画面や、Google DriveのSpreadsheetが存在するフォルダの画面にいくと、Chromeの右上のMasterBirdアイコンが押せるようになるので、それを押してください
 9. 情報の入力を求められるので、入力してください（GitHub Access Tokenは、この手順の4で取得したものを使用してください）
-10. Config File IdとApply Passwordは、管理者から教えてもらってください
+10. Config File IdとApply Passwordは、管理者から教えてもらってください（省略した場合、Apply Passwordは不要です）
 
 ### `extension-config.json`について
 
