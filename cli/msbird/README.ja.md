@@ -77,7 +77,7 @@ $ msbird init --config cli-config.json
   // CLIからリポジトリにcsvを参照するために必要なAccess Token
   "gitHubAccessToken": "",
 
-  // `sync.gs`導入時に設定したパスワード（省略した場合は不要）
+  // sync.gs導入時に設定したパスワード（省略した場合は不要）
   "syncPassword": "",
 
   // Google API Consoleで作成したClient Id
@@ -125,7 +125,7 @@ $ msbird init --config cli-config.json --service-account service-account.json
   // CLIからリポジトリにcsvを参照するために必要なAccess Token
   "gitHubAccessToken": "",
 
-  // `sync.gs`導入時に設定したパスワード（省略した場合は不要）
+  // sync.gs導入時に設定したパスワード（省略した場合は不要）
   "syncPassword": ""
 }
 ```
@@ -143,6 +143,6 @@ Pull Requestが対象のブランチにマージされた際に、その変更�
 $ msbird sync --csv-path csvs/example.csv --sheet-name develop
 ```
 
-この例では、Google Driveに「csvs」フォルダと「example」スプレッドシートが存在しない場合は作成後、そのスプレットシートに"develop"シートがなければ作成し、そこにcsvデータを書き込んでいます。
+この例では、Google Driveに「csvs」フォルダと「example」スプレッドシートが存在しない場合は作成後、そのスプレットシートに「develop」シートがなければ作成し、そこにcsvデータを書き込んでいます。
 
 なお、引数の`--csv-path`はリポジトリからの相対パスでなければならないことに注意してください。

@@ -4,11 +4,11 @@
 
 This is a master data management tool that can merge sheets in Spreadsheet and push it to GitHub as csv, using only the Chrome Extension.
 
-<p align="center"><img width="600" src="https://github.com/yukiarrr/MasterBird/raw/master/docs/images/masterbird.gif" alt="MasterBird gif"></p>
+<p align="center"><img width="700" src="https://github.com/yukiarrr/MasterBird/raw/master/docs/images/masterbird.gif" alt="MasterBird gif"></p>
 
 ## Table of contents
 
-- [Overview](#Overview)
+- [Overview](#overview)
 - [Getting started](#getting-started)
   - [Administrator only](#administrator-only)
   - [All members](#all-members)
@@ -18,7 +18,7 @@ This is a master data management tool that can merge sheets in Spreadsheet and p
   - [Parameter description](#parameter-description)
   - [Push a sheet directly to GitHub](#push-a-sheet-directly-to-github)
   - [Merge sheets and push it to GitHub](#merge-sheets-and-push-it-to-github)
-  - [Push multiple Spreadsheets to GitHub](#push-multiple-Spreadsheets-to-github)
+  - [Push multiple Spreadsheets to GitHub](#push-multiple-spreadsheets-to-github)
 - [Rules for merging sheets and converting csv](#rules-for-merging-sheets-and-converting-csv)
   - [Basic rules](#basic-rules)
   - [Rules for merging sheets](#rules-for-merging-sheets)
@@ -46,7 +46,7 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
 7. You will be asked to approve it after the update, so follow the instructions to approve it
 8. Edit MasterBird/examples/extension-config.json with reference to [this](#about-extension-configjson) (use the URL that appears after the completion of step 5 of this procedure for applyUrl)
 9. Right-click on the configuration file in a location on Google Drive that your team members can access and upload the `extension-config.json` that you edited in `Upload files`
-10. Right-click on the uploaded `extension-config.json`, select `Get shareable link`, and note the `XXXXXXX` part of `https://drive.google.com/open?id=XXXXXXX` as the ID (it will be required as Config File Id when the Chrome extension is installed)
+10. Right-click on the uploaded `extension-config.json`, select `Get shareable link`, and note the `XXXXXXX` part of `https://drive.google.com/file/d/XXXXXXX/view?usp=sharing` as the ID (it will be required as Config File Id when the Chrome extension is installed)
 
 ### All members
 
@@ -57,9 +57,9 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
 5. Please refer to [this page](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line) and check the "repo" box in step 7 of the reference, and then issue the GitHub access token
 6. Go to `chrome://extensions`, turn on developer mode in the upper right corner, and select `MasterBird/extension/app` under "LOAD UNPACKED"
 7. Please log in with your administrator-designated Google account
-8. When you go to the Spreadsheet screen or the folder where Spreadsheet is located in Google Drive, you will be able to press the MasterBird icon in the upper right corner of Chrome
+8. When you go to Spreadsheet screen or the folder where Spreadsheet is located in Google Drive, you will be able to press the MasterBird icon in the upper right corner of Chrome
 9. You will be asked for information, so enter it (use the GitHub Access Token you got in step 4 of this procedure)
-10. Config File Id and Apply Password should be told to you by your administrator
+10. Config File Id and Apply Password should be told to you by your administrator (if omitted, Apply Password is not necessary)
 
 ### About `extension-config.json`
 
@@ -92,9 +92,9 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
 
 |Parameter|Description|
 |:-:|:-:|
-|Apply Spreadsheets|Spreadsheets that are subject to Apply.<br />Automatic selection on the spreadsheet and multiple selections on Google Drive.|
+|Apply Spreadsheets|Spreadsheets that are subject to Apply.<br />Automatic selection on Spreadsheet and multiple selections on Google Drive.|
 |Target Sheet|The sheet to be pushed to.<br />If it doesn't exist, it will be created automatically.<br />The name of the branch to be pushed is the same as the name of the sheet.|
-|Overlay Sheets|Sheet to overwrite Target Sheet.<br />Multiple sheets can be selected, in which case, the sheets are overwritten in the order of input.|
+|Overlay Sheets|The sheet to overwrite Target Sheet.<br />Multiple sheets can be selected, in which case, the sheets are overwritten in the order of input.|
 |Base Branch|The name of the branch to use as a base if the branch with Target Sheet name does not exist and is newly created.|
 
 ### Push a sheet directly to GitHub
@@ -116,8 +116,8 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
 
 ### Push multiple Spreadsheets to GitHub
 
-1. Go to the Google Drive folder screen that contains the Spreadsheet you want to reflect.
-2. In the 'Apply Spreadsheets' section, select the spreadsheet you want to reflect.
+1. Go to the Google Drive folder screen that contains Spreadsheet you want to reflect.
+2. In the 'Apply Spreadsheets' section, select Spreadsheet you want to reflect.
 3. As for "Target Sheet" and "Overlay Sheets", it is the same as [Merge sheets and push it to GitHub](#merge-sheets-and-push-it-to-github), and is applied to all selected Spreadsheets.
 4. press "Apply".
 5. if "Success 🎉" comes up, it's a success!

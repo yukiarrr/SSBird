@@ -4,7 +4,7 @@
 
 Chrome拡張だけで、Spreadsheetのシート同士をマージし、それをcsvとしてGitHubにプッシュすることができるマスタデータ管理ツールです。
 
-<p align="center"><img width="600" src="https://github.com/yukiarrr/MasterBird/raw/master/docs/images/masterbird.gif" alt="MasterBird gif"></p>
+<p align="center"><img width="700" src="https://github.com/yukiarrr/MasterBird/raw/master/docs/images/masterbird.gif" alt="MasterBird gif"></p>
 
 ## 目次
 
@@ -46,7 +46,7 @@ Chrome拡張だけで、Spreadsheetのシート同士をマージし、それを
 7. 更新後に承認を求められるので、説明に従って承認してください
 8. [こちら](#extension-configjsonについて)を参考に、`MasterBird/examples/extension-config.json`を編集します（applyUrlはこの手順の5の完了後に表示されるURLを使用してください）
 9. 設定ファイルをチームメンバーがアクセスできるGoogle Drive上の場所で右クリックし、`ファイルをアップロード`で編集した`extension-config.json`をアップロードします
-10. アップロードした`extension-config.json`を右クリックし、`共有可能なリンクを取得`を選択し、取得した`https://drive.google.com/open?id=XXXXXXX`のうち、`XXXXXXX`の部分をIDとしてメモしてください（Chrome拡張導入時にConfig File Idとして必要となります）
+10. アップロードした`extension-config.json`を右クリックし、`共有可能なリンクを取得`を選択し、取得した`https://drive.google.com/file/d/XXXXXXX/view?usp=sharing`のうち、`XXXXXXX`の部分をIDとしてメモしてください（Chrome拡張導入時にConfig File Idとして必要となります）
 
 ### 全メンバー
 
@@ -59,7 +59,7 @@ Chrome拡張だけで、Spreadsheetのシート同士をマージし、それを
 7. 管理者指定のGoogleアカウントでログインしてください
 8. Spreadsheetの画面や、Google DriveのSpreadsheetが存在するフォルダの画面にいくと、Chromeの右上のMasterBirdアイコンが押せるようになるので、それを押してください
 9. 情報の入力を求められるので、入力してください（GitHub Access Tokenは、この手順の4で取得したものを使用してください）
-10. Config File IdとApply Passwordは、管理者から教えてもらってください
+10. Config File IdとApply Passwordは、管理者から教えてもらってください（省略した場合、Apply Passwordは不要です）
 
 ### `extension-config.json`について
 

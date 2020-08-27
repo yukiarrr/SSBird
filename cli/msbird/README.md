@@ -75,7 +75,7 @@ The required option is `--config` and the required json key is as follows.
   // Access Token required to reference csv data from CLI to repository
   "gitHubAccessToken": "",
 
-  // The password that was set when the `sync.gs` was set up (if omitted, it is not necessary)
+  // The password that was set when the sync.gs was set up (if omitted, it is not necessary)
   "syncPassword": "",
 
   // Client Id created in Google API Console
@@ -123,7 +123,7 @@ The required options are `--config` and `--service-account`, and the json key re
   // Access Token required to reference csv data from CLI to repository
   "gitHubAccessToken": "",
 
-  // The password that was set when the `sync.gs` was set up (if omitted, it is not necessary)
+  // The password that was set when the sync.gs was set up (if omitted, it is not necessary)
   "syncPassword": ""
 }
 ```
