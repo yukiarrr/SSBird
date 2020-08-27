@@ -1,10 +1,10 @@
 {
-    "syncUrl": "https://script.google.com/XXXXXXX/exec",
-    "repositoryUrl": "https://github.com/XXXXXXX/XXXXXXX",
-    "rootFolderId": "XXXXXXX",
-    "gitHubAccessToken": "",
-    "syncPassword": "",
-    "googleClientId": "XXXXXXX",
-    "googleClientSecret": "XXXXXXX",
-    "googleRefreshToken": "XXXXXXX"
-  }
+  "syncUrl": "https://script.google.com/XXXXXXX/exec",
+  "repositoryUrl": "https://github.com/XXXXXXX/XXXXXXX",
+  "rootFolderId": "XXXXXXX",
+  "gitHubAccessToken": "",
+  "syncPassword": "",
+  "googleClientId": "XXXXXXX",
+  "googleClientSecret": "XXXXXXX",
+  "googleRefreshToken": "XXXXXXX"
+}
