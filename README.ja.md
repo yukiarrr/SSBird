@@ -15,6 +15,7 @@ Chrome拡張だけで、Spreadsheetのシート同士をマージし、それを
   - [`extension-config.json`について](#extension-configjsonについて)
 - [使い方](#使い方)
   - [ダークモードをサポート](#ダークモードをサポート)
+  - [各パラメータの説明](#各パラメータの説明)
   - [シートを直接GitHubにプッシュする](#シートを直接GitHubにプッシュする)
   - [シート同士をマージしてGitHubにプッシュする](#シート同士をマージしてGitHubにプッシュする)
   - [複数のSpreadsheetをGitHubにプッシュする](#複数のSpreadsheetをGitHubにプッシュする)
@@ -86,6 +87,15 @@ Chrome拡張だけで、Spreadsheetのシート同士をマージし、それを
 |ライト|ダーク|
 |:-:|:-:|
 |<p align="center"><img width="250" src="https://github.com/yukiarrr/MasterBird/raw/master/docs/images/light.png" alt="MasterBird light mode"></p>|<p align="center"><img width="250" src="https://github.com/yukiarrr/MasterBird/raw/master/docs/images/dark.png" alt="MasterBird dark mode"></p>|
+
+### 各パラメータの説明
+
+|パラメータ|説明|
+|:-:|:-:|
+|Apply Spreadsheets|Applyの対象となるスプレットシート<br />スプレットシート上では自動選択、Google Drive上では複数選択できるようになる|
+|Target Sheet|プッシュの対象となるシート<br />もし存在しなければ、自動で作成される<br />プッシュされるブランチ名はシート名と同じになる|
+|Overlay Sheets|Target Sheetに上書きするシート<br />複数選択可能で、その場合は入力順に上書きされていく|
+|Base Branch|Target Sheet名のブランチが存在せず、新しく作成される場合の派生元となるブランチ名|
 
 ### シートを直接GitHubにプッシュする
 

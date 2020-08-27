@@ -15,6 +15,7 @@ This is a master data management tool that can merge sheets in Spreadsheet and p
   - [About `extension-config.json`](#about-extension-configjson)
 - [How to use](#how-to-use)
   - [Support dark mode](#support-dark-mode)
+  - [Parameter description](#parameter-description)
   - [Push a sheet directly to GitHub](#push-a-sheet-directly-to-github)
   - [Merge sheets and push it to GitHub](#merge-sheets-and-push-it-to-github)
   - [Push multiple Spreadsheets to GitHub](#push-multiple-Spreadsheets-to-github)
@@ -86,6 +87,15 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
 |light|dark|
 |:-:|:-:|
 |<p align="center"><img width="250" src="https://github.com/yukiarrr/MasterBird/raw/master/docs/images/light.png" alt="MasterBird light mode"></p>|<p align="center"><img width="250" src="https://github.com/yukiarrr/MasterBird/raw/master/docs/images/dark.png" alt="MasterBird dark mode"></p>|
+
+### Parameter description
+
+|Parameter|Description|
+|:-:|:-:|
+|Apply Spreadsheets|Spreadsheets that are subject to Apply.<br />Automatic selection on the spreadsheet and multiple selections on Google Drive.|
+|Target Sheet|The sheet to be pushed to.<br />If it doesn't exist, it will be created automatically.<br />The name of the branch to be pushed is the same as the name of the sheet.|
+|Overlay Sheets|Sheet to overwrite Target Sheet.<br />Multiple sheets can be selected, in which case, the sheets are overwritten in the order of input.|
+|Base Branch|The name of the branch to use as a base if the branch with Target Sheet name does not exist and is newly created.|
 
 ### Push a sheet directly to GitHub
 
