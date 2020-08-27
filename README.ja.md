@@ -4,7 +4,7 @@
 
 Chrome拡張だけで、Spreadsheetのシート同士をマージし、それをcsvとしてGitHubにプッシュすることができるマスタデータ管理ツールです。
 
-<p align="center"><img width="600" src="https://github.com/yukiarrr/MasterBird/raw/master/docs/images/masterbird.gif" alt="MasterBird gif"></p>
+<p align="center"><img width="700" src="https://github.com/yukiarrr/MasterBird/raw/master/docs/images/masterbird.gif" alt="MasterBird gif"></p>
 
 ## 目次
 
