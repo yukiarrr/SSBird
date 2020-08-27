@@ -58,7 +58,7 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
 7. Please log in with your administrator-designated Google account
 8. When you go to the Spreadsheet screen or the folder where Spreadsheet is located in Google Drive, you will be able to press the MasterBird icon in the upper right corner of Chrome
 9. You will be asked for information, so enter it (use the GitHub Access Token you got in step 4 of this procedure)
-10. Config File Id should be told to you by your administrator
+10. Config File Id and Apply Password should be told to you by your administrator
 
 ### About `extension-config.json`
 
