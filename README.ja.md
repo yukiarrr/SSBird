@@ -46,7 +46,7 @@ Chrome拡張だけで、Spreadsheetのシート同士をマージし、それを
 7. 更新後に承認を求められるので、説明に従って承認してください
 8. [こちら](#extension-configjsonについて)を参考に、`MasterBird/examples/extension-config.json`を編集します（applyUrlはこの手順の5の完了後に表示されるURLを使用してください）
 9. 設定ファイルをチームメンバーがアクセスできるGoogle Drive上の場所で右クリックし、`ファイルをアップロード`で編集した`extension-config.json`をアップロードします
-10. アップロードした`extension-config.json`を右クリックし、`共有可能なリンクを取得`を選択し、取得した`https://drive.google.com/open?id=XXXXXXX`のうち、`XXXXXXX`の部分をIDとしてメモしてください（Chrome拡張導入時にConfig File Idとして必要となります）
+10. アップロードした`extension-config.json`を右クリックし、`共有可能なリンクを取得`を選択し、取得した`https://drive.google.com/file/d/XXXXXXX/view?usp=sharing`のうち、`XXXXXXX`の部分をIDとしてメモしてください（Chrome拡張導入時にConfig File Idとして必要となります）
 
 ### 全メンバー
 

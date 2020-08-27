@@ -46,7 +46,7 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
 7. You will be asked to approve it after the update, so follow the instructions to approve it
 8. Edit MasterBird/examples/extension-config.json with reference to [this](#about-extension-configjson) (use the URL that appears after the completion of step 5 of this procedure for applyUrl)
 9. Right-click on the configuration file in a location on Google Drive that your team members can access and upload the `extension-config.json` that you edited in `Upload files`
-10. Right-click on the uploaded `extension-config.json`, select `Get shareable link`, and note the `XXXXXXX` part of `https://drive.google.com/open?id=XXXXXXX` as the ID (it will be required as Config File Id when the Chrome extension is installed)
+10. Right-click on the uploaded `extension-config.json`, select `Get shareable link`, and note the `XXXXXXX` part of `https://drive.google.com/file/d/XXXXXXX/view?usp=sharing` as the ID (it will be required as Config File Id when the Chrome extension is installed)
 
 ### All members
 
