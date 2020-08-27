@@ -4,7 +4,9 @@
 
 This is a master data management tool that can merge sheets in Spreadsheet and push it to GitHub as csv, using only the Chrome Extension.
 
-## 目次
+<p align="center"><img width="600" src="https://github.com/yukiarrr/MasterBird/raw/master/docs/images/masterbird.gif" alt="MasterBird gif"></p>
+
+## Table of contents
 
 - [Overview](#Overview)
 - [Getting started](#getting-started)
@@ -13,6 +15,7 @@ This is a master data management tool that can merge sheets in Spreadsheet and p
   - [About `extension-config.json`](#about-extension-configjson)
 - [How to use](#how-to-use)
   - [Support dark mode](#support-dark-mode)
+  - [Parameter description](#parameter-description)
   - [Push a sheet directly to GitHub](#push-a-sheet-directly-to-github)
   - [Merge sheets and push it to GitHub](#merge-sheets-and-push-it-to-github)
   - [Push multiple Spreadsheets to GitHub](#push-multiple-Spreadsheets-to-github)
@@ -56,7 +59,7 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
 7. Please log in with your administrator-designated Google account
 8. When you go to the Spreadsheet screen or the folder where Spreadsheet is located in Google Drive, you will be able to press the MasterBird icon in the upper right corner of Chrome
 9. You will be asked for information, so enter it (use the GitHub Access Token you got in step 4 of this procedure)
-10. Config File Id should be told to you by your administrator
+10. Config File Id and Apply Password should be told to you by your administrator
 
 ### About `extension-config.json`
 
@@ -84,6 +87,15 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
 |light|dark|
 |:-:|:-:|
 |<p align="center"><img width="250" src="https://github.com/yukiarrr/MasterBird/raw/master/docs/images/light.png" alt="MasterBird light mode"></p>|<p align="center"><img width="250" src="https://github.com/yukiarrr/MasterBird/raw/master/docs/images/dark.png" alt="MasterBird dark mode"></p>|
+
+### Parameter description
+
+|Parameter|Description|
+|:-:|:-:|
+|Apply Spreadsheets|Spreadsheets that are subject to Apply.<br />Automatic selection on the spreadsheet and multiple selections on Google Drive.|
+|Target Sheet|The sheet to be pushed to.<br />If it doesn't exist, it will be created automatically.<br />The name of the branch to be pushed is the same as the name of the sheet.|
+|Overlay Sheets|Sheet to overwrite Target Sheet.<br />Multiple sheets can be selected, in which case, the sheets are overwritten in the order of input.|
+|Base Branch|The name of the branch to use as a base if the branch with Target Sheet name does not exist and is newly created.|
 
 ### Push a sheet directly to GitHub
 

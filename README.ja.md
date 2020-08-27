@@ -4,6 +4,8 @@
 
 Chrome拡張だけで、Spreadsheetのシート同士をマージし、それをcsvとしてGitHubにプッシュすることができるマスタデータ管理ツールです。
 
+<p align="center"><img width="600" src="https://github.com/yukiarrr/MasterBird/raw/master/docs/images/masterbird.gif" alt="MasterBird gif"></p>
+
 ## 目次
 
 - [概要](#概要)
@@ -13,6 +15,7 @@ Chrome拡張だけで、Spreadsheetのシート同士をマージし、それを
   - [`extension-config.json`について](#extension-configjsonについて)
 - [使い方](#使い方)
   - [ダークモードをサポート](#ダークモードをサポート)
+  - [各パラメータの説明](#各パラメータの説明)
   - [シートを直接GitHubにプッシュする](#シートを直接GitHubにプッシュする)
   - [シート同士をマージしてGitHubにプッシュする](#シート同士をマージしてGitHubにプッシュする)
   - [複数のSpreadsheetをGitHubにプッシュする](#複数のSpreadsheetをGitHubにプッシュする)
@@ -56,7 +59,7 @@ Chrome拡張だけで、Spreadsheetのシート同士をマージし、それを
 7. 管理者指定のGoogleアカウントでログインしてください
 8. Spreadsheetの画面や、Google DriveのSpreadsheetが存在するフォルダの画面にいくと、Chromeの右上のMasterBirdアイコンが押せるようになるので、それを押してください
 9. 情報の入力を求められるので、入力してください（GitHub Access Tokenは、この手順の4で取得したものを使用してください）
-10. Config File Idは、管理者から教えてもらってください
+10. Config File IdとApply Passwordは、管理者から教えてもらってください
 
 ### `extension-config.json`について
 
@@ -84,6 +87,15 @@ Chrome拡張だけで、Spreadsheetのシート同士をマージし、それを
 |ライト|ダーク|
 |:-:|:-:|
 |<p align="center"><img width="250" src="https://github.com/yukiarrr/MasterBird/raw/master/docs/images/light.png" alt="MasterBird light mode"></p>|<p align="center"><img width="250" src="https://github.com/yukiarrr/MasterBird/raw/master/docs/images/dark.png" alt="MasterBird dark mode"></p>|
+
+### 各パラメータの説明
+
+|パラメータ|説明|
+|:-:|:-:|
+|Apply Spreadsheets|Applyの対象となるスプレットシート<br />スプレットシート上では自動選択、Google Drive上では複数選択できるようになる|
+|Target Sheet|プッシュの対象となるシート<br />もし存在しなければ、自動で作成される<br />プッシュされるブランチ名はシート名と同じになる|
+|Overlay Sheets|Target Sheetに上書きするシート<br />複数選択可能で、その場合は入力順に上書きされていく|
+|Base Branch|Target Sheet名のブランチが存在せず、新しく作成される場合の派生元となるブランチ名|
 
 ### シートを直接GitHubにプッシュする
 
