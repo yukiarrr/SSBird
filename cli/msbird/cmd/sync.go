@@ -129,6 +129,7 @@ func request(method string, url string, token string, json []byte) (string, erro
 	if token != "" {
 		req.Header.Set("Authorization", "Bearer "+token)
 	}
+	req.Header.Set("Cache-Control", "no-cache")
 
 	client := &http.Client{Timeout: time.Duration(360) * time.Second}
 	resp, err := client.Do(req)
