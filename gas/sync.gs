@@ -16,7 +16,11 @@ function doPost(e) {
     rootFolderId,
     spreadsheetPath,
     syncPassword,
-  } = JSON.parse(decodeURI(e.postData.getDataAsString()));
+  } = JSON.parse(
+    decodeURI(
+      e.postData.getDataAsString().replace(/%(?![0-9][0-9a-fA-F]+)/g, "%25")
+    )
+  );
   const response = {};
 
   if (syncPassword !== password) {
