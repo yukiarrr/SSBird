@@ -55,7 +55,7 @@ function mergeSheets(spreadsheetId, targetSheetName, overlaySheetNames) {
   if (overlaySheetNames.length === 0) {
     // Target sheet only
     return {
-      csvValue: valuesToCsvs(targetSheet.getDataRange().getValues()),
+      csvValue: valuesToCsvs(targetSheet.getDataRange().getDisplayValues()),
       merged: true,
     };
   }
@@ -72,8 +72,8 @@ function mergeSheets(spreadsheetId, targetSheetName, overlaySheetNames) {
       continue;
     }
 
-    let targetValues = targetSheet.getDataRange().getValues();
-    const overlayValues = overlaySheet.getDataRange().getValues();
+    let targetValues = targetSheet.getDataRange().getDisplayValues();
+    const overlayValues = overlaySheet.getDataRange().getDisplayValues();
     let firstTargetValue = targetValues[0];
     const firstOverlayValue = overlayValues[0];
     const insertColumnIndices = [];
@@ -148,7 +148,7 @@ function mergeSheets(spreadsheetId, targetSheetName, overlaySheetNames) {
 
       SpreadsheetApp.flush();
 
-      targetValues = targetSheet.getDataRange().getValues();
+      targetValues = targetSheet.getDataRange().getDisplayValues();
       firstTargetValue = targetValues[0];
     }
 
@@ -250,7 +250,7 @@ function mergeSheets(spreadsheetId, targetSheetName, overlaySheetNames) {
   }
 
   return {
-    csvValue: valuesToCsvs(targetSheet.getDataRange().getValues()),
+    csvValue: valuesToCsvs(targetSheet.getDataRange().getDisplayValues()),
     merged: merged,
   };
 }
