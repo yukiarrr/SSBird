@@ -1,4 +1,4 @@
-// MasterBird v0.6.0
+// MasterBird v0.6.1
 // https://github.com/yukiarrr/MasterBird
 // MIT License
 
