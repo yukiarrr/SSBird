@@ -95,7 +95,7 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
 |Apply Spreadsheets|Spreadsheets that are subject to Apply.<br />Automatic selection on Spreadsheet and multiple selections on Google Drive.|
 |Target Sheet|The sheet to be pushed to.<br />If it doesn't exist, it will be created automatically.<br />The name of the branch to be pushed is the same as the name of the sheet.|
 |Overlay Sheets|The sheet to overwrite Target Sheet.<br />Multiple sheets can be selected, in which case, the sheets are overwritten in the order of input.|
-|Base Branch|The name of the branch to use as a base if the branch with Target Sheet name does not exist and is newly created.|
+|Parent Branch|The name of the branch to use as a parent if the branch with Target Sheet name does not exist and is newly created.|
 
 ### Push a sheet directly to GitHub
 

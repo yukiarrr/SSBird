@@ -34,14 +34,14 @@ type Csv struct {
 }
 
 type Request struct {
-	FunctionType     FunctionType `json:"functionType"`
-	RepositoryUrl    string       `json:"repositoryUrl"`
-	TargetBranchName string       `json:"targetBranchName"`
-	BaseBranchNames  []string     `json:"baseBranchNames"`
-	CommitMessage    string       `json:"commitMessage"`
-	Username         string       `json:"username"`
-	Email            string       `json:"email"`
-	Csvs             []Csv        `json:"csvs"`
+	FunctionType      FunctionType `json:"functionType"`
+	RepositoryUrl     string       `json:"repositoryUrl"`
+	TargetBranchName  string       `json:"targetBranchName"`
+	ParentBranchNames []string     `json:"parentBranchNames"`
+	CommitMessage     string       `json:"commitMessage"`
+	Username          string       `json:"username"`
+	Email             string       `json:"email"`
+	Csvs              []Csv        `json:"csvs"`
 }
 
 type Response struct {
@@ -70,7 +70,7 @@ func main() {
 				continue
 			}
 		case Apply:
-			err = apply(req.TargetBranchName, req.BaseBranchNames, req.CommitMessage, req.Username, req.Email, req.Csvs)
+			err = apply(req.TargetBranchName, req.ParentBranchNames, req.CommitMessage, req.Username, req.Email, req.Csvs)
 			if err == nil {
 				sendMessage([]byte("{}"))
 				continue
@@ -95,7 +95,7 @@ func initialize(repositoryUrl string) error {
 	return err
 }
 
-func apply(targetBranchName string, baseBranchNames []string, commitMessage string, username string, email string, csvs []Csv) error {
+func apply(targetBranchName string, parentBranchNames []string, commitMessage string, username string, email string, csvs []Csv) error {
 	refs, err := repository.References()
 	if err != nil {
 		return err
@@ -127,10 +127,10 @@ func apply(targetBranchName string, baseBranchNames []string, commitMessage stri
 	if err == nil {
 		coHash = remoteRef.Hash()
 	} else {
-		for _, baseBranchName := range baseBranchNames {
-			baseRef, err := repository.Reference(plumbing.NewRemoteReferenceName("origin", baseBranchName), true)
+		for _, parentBranchName := range parentBranchNames {
+			parentRef, err := repository.Reference(plumbing.NewRemoteReferenceName("origin", parentBranchName), true)
 			if err == nil {
-				coHash = baseRef.Hash()
+				coHash = parentRef.Hash()
 				break
 			}
 		}
