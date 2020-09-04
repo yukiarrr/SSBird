@@ -72,6 +72,7 @@ backgroundObject.apply = async (args) => {
     targetSheetName,
     overlaySheetNames,
     baseBranchName,
+    commitMessage,
     callback,
   } = args;
   backgroundObject.applyCallback = callback;
@@ -139,6 +140,7 @@ backgroundObject.apply = async (args) => {
     functionType: FunctionType.Apply,
     targetBranchName: targetSheetName,
     baseBranchNames: baseBranchNames,
+    commitMessage: commitMessage,
     username: backgroundObject.gitHubUsername,
     email: backgroundObject.gitHubEmail,
     csvs: csvs,

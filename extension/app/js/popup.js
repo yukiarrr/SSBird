@@ -313,6 +313,7 @@ window.popupObject = {};
           targetSheetName: popupObject.targetSheetSelectize.items[0],
           overlaySheetNames: popupObject.overlaySheetsSelectize.items,
           baseBranchName: popupObject.baseBranchSelectize.items[0] ?? "",
+          commitMessage: $("#textarea-commit-message").val(),
           callback: () => {
             stopLoading("#btn-apply", "Apply");
             isApplying = false;
