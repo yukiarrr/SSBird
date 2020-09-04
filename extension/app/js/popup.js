@@ -125,7 +125,9 @@ window.popupObject = {};
           })),
         })[0].selectize;
 
-        popupObject.baseBranchSelectize = $("#select-base-branch").selectize({
+        popupObject.parentBranchSelectize = $(
+          "#select-parent-branch"
+        ).selectize({
           persist: false,
           create: (input) => {
             return {
@@ -312,7 +314,7 @@ window.popupObject = {};
           spreadsheetIds: popupObject.applySpreadsheetsSelectize.items,
           targetSheetName: popupObject.targetSheetSelectize.items[0],
           overlaySheetNames: popupObject.overlaySheetsSelectize.items,
-          baseBranchName: popupObject.baseBranchSelectize.items[0] ?? "",
+          parentBranchName: popupObject.parentBranchSelectize.items[0] ?? "",
           commitMessage: $("#textarea-commit-message").val(),
           callback: () => {
             stopLoading("#btn-apply", "Apply");
