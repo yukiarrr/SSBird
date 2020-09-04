@@ -38,6 +38,7 @@ type Request struct {
 	RepositoryUrl    string       `json:"repositoryUrl"`
 	TargetBranchName string       `json:"targetBranchName"`
 	BaseBranchNames  []string     `json:"baseBranchNames"`
+	CommitMessage    string       `json:"commitMessage"`
 	Username         string       `json:"username"`
 	Email            string       `json:"email"`
 	Csvs             []Csv        `json:"csvs"`
@@ -69,7 +70,7 @@ func main() {
 				continue
 			}
 		case Apply:
-			err = apply(req.TargetBranchName, req.BaseBranchNames, req.Username, req.Email, req.Csvs)
+			err = apply(req.TargetBranchName, req.BaseBranchNames, req.CommitMessage, req.Username, req.Email, req.Csvs)
 			if err == nil {
 				sendMessage([]byte("{}"))
 				continue
@@ -94,7 +95,7 @@ func initialize(repositoryUrl string) error {
 	return err
 }
 
-func apply(targetBranchName string, baseBranchNames []string, username string, email string, csvs []Csv) error {
+func apply(targetBranchName string, baseBranchNames []string, commitMessage string, username string, email string, csvs []Csv) error {
 	refs, err := repository.References()
 	if err != nil {
 		return err
@@ -167,7 +168,10 @@ func apply(targetBranchName string, baseBranchNames []string, username string, e
 		return fmt.Errorf("%s", "Not changed.")
 	}
 
-	cHash, err := w.Commit("Update "+strings.Join(addedCsvPaths, ", "), &git.CommitOptions{
+	if commitMessage == "" {
+		commitMessage = "Update " + strings.Join(addedCsvPaths, ", ")
+	}
+	cHash, err := w.Commit(commitMessage, &git.CommitOptions{
 		Author: &object.Signature{
 			Name:  username,
 			Email: email,
