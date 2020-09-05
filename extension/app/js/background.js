@@ -71,8 +71,8 @@ backgroundObject.apply = async (args) => {
     spreadsheetIds,
     targetSheetName,
     overlaySheetNames,
-    parentBranchName,
     commitMessage,
+    parentBranchName,
     callback,
   } = args;
   backgroundObject.applyCallback = callback;

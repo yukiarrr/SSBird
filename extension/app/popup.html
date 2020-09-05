@@ -37,16 +37,22 @@
           Commit Message (optional)
           <textarea
             id="textarea-commit-message"
-            placeholder="ex. Change description"
+            placeholder="Update XXX.csv"
           ></textarea>
           <br />
           Parent Branch (optional)
           <input
             type="text"
-            id="input-parent-branch"
-            placeholder="ex. master"
+            id="text-parent-branch"
+            placeholder="Auto select"
           />
           <br />
+          <div class="checkbox">
+            <input id="checkbox-create-pr" type="checkbox" /><label
+              for="checkbox-create-pr"
+              >Create Pull Request</label
+            >
+          </div>
           <br />
           <a id="btn-apply" class="btn-gradation btn-green">Apply</a>
         </div>

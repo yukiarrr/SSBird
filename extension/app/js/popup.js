@@ -302,8 +302,8 @@ window.popupObject = {};
           spreadsheetIds: popupObject.applySpreadsheetsSelectize.items,
           targetSheetName: popupObject.targetSheetSelectize.items[0],
           overlaySheetNames: popupObject.overlaySheetsSelectize.items,
-          parentBranchName: $("#input-parent-branch").val(),
           commitMessage: $("#textarea-commit-message").val(),
+          parentBranchName: $("#text-parent-branch").val(),
           callback: () => {
             stopLoading("#btn-apply", "Apply");
             isApplying = false;
