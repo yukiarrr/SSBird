@@ -68,7 +68,7 @@ backgroundObject.apply = async (args) => {
   const {
     spreadsheetIds,
     targetSheetName,
-    overlaySheetNames,
+    mergeSheetNames,
     commitMessage,
     parentBranchName,
     createPR,
@@ -94,7 +94,7 @@ backgroundObject.apply = async (args) => {
         data: JSON.stringify({
           spreadsheetId: spreadsheetId,
           targetSheetName: targetSheetName,
-          overlaySheetNames: overlaySheetNames,
+          mergeSheetNames: mergeSheetNames,
           notUpdateSheet: createPR,
           rootFolderId: backgroundObject.rootFolderId,
           applyPassword: backgroundObject.applyPassword,
@@ -140,12 +140,12 @@ backgroundObject.apply = async (args) => {
   let prTitle = "";
   let prBaseBranchName = "";
   if (createPR) {
-    targetBranchName = overlaySheetNames.slice(-1)[0];
+    targetBranchName = mergeSheetNames.slice(-1)[0];
     parentBranchNames.push(targetSheetName);
     prBaseBranchName = targetSheetName;
     prTitle = `[MasterBird] ${targetBranchName} to ${prBaseBranchName} by ${backgroundObject.gitHubUsername}`;
   } else {
-    parentBranchNames = parentBranchNames.concat(overlaySheetNames);
+    parentBranchNames = parentBranchNames.concat(mergeSheetNames);
   }
   port.postMessage({
     functionType: FunctionType.Apply,

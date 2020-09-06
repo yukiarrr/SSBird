@@ -13,7 +13,7 @@ function doPost(e) {
   const {
     spreadsheetId,
     targetSheetName,
-    overlaySheetNames,
+    mergeSheetNames,
     notUpdateSheet,
     rootFolderId,
     applyPassword,
@@ -28,16 +28,16 @@ function doPost(e) {
     throw new Error("Wrong password.");
   }
 
-  const { csvValue, merged } = mergeSheets(
+  const { csvText, merged } = mergeSheets(
     spreadsheetId,
     targetSheetName,
-    overlaySheetNames,
+    mergeSheetNames,
     notUpdateSheet
   );
   if (merged) {
     response["csv"] = {
       path: getFullPath(spreadsheetId, rootFolderId),
-      value: csvValue,
+      value: csvText,
     };
   }
 
@@ -50,7 +50,7 @@ function doPost(e) {
 function mergeSheets(
   spreadsheetId,
   targetSheetName,
-  overlaySheetNames,
+  mergeSheetNames,
   notUpdateSheet
 ) {
   const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
@@ -63,40 +63,40 @@ function mergeSheets(
     ? [[]]
     : targetSheet.getDataRange().getDisplayValues();
 
-  if (overlaySheetNames.length === 0) {
+  if (mergeSheetNames.length === 0) {
     // Target sheet only
     return {
-      csvValue: dumpCsv(targetValues),
+      csvText: dumpCsv(targetValues),
       merged: true,
     };
   }
 
   let merged = false;
 
-  for (const overlaySheetName of overlaySheetNames) {
-    if (overlaySheetName === targetSheetName) {
+  for (const mergeSheetName of mergeSheetNames) {
+    if (mergeSheetName === targetSheetName) {
       continue;
     }
 
-    const overlaySheet = spreadsheet.getSheetByName(overlaySheetName);
-    if (!overlaySheet) {
+    const mergeSheet = spreadsheet.getSheetByName(mergeSheetName);
+    if (!mergeSheet) {
       continue;
     }
 
-    const overlayValues = overlaySheet.getDataRange().getDisplayValues();
+    const mergeValues = mergeSheet.getDataRange().getDisplayValues();
     const insertColumnIndices = [];
 
     for (
-      let overlayColumnIndex = 0;
-      overlayColumnIndex < overlayValues[0].length;
-      overlayColumnIndex++
+      let mergeColumnIndex = 0;
+      mergeColumnIndex < mergeValues[0].length;
+      mergeColumnIndex++
     ) {
-      const overlayColumnValue = overlayValues[0][overlayColumnIndex];
+      const mergeColumnValue = mergeValues[0][mergeColumnIndex];
       if (
-        overlayColumnValue &&
-        !targetValues[0].some((value) => value == overlayColumnValue)
+        mergeColumnValue &&
+        !targetValues[0].some((value) => value == mergeColumnValue)
       ) {
-        insertColumnIndices.push(overlayColumnIndex);
+        insertColumnIndices.push(mergeColumnIndex);
       }
     }
 
@@ -131,7 +131,7 @@ function mergeSheets(
             )
           : value
       );
-      const updateValue = overlayValues[0][insertColumnIndex];
+      const updateValue = mergeValues[0][insertColumnIndex];
       targetValues[0][insertColumnIndex] = updateValue;
       columnRequests.push({
         updateCells: {
@@ -167,12 +167,12 @@ function mergeSheets(
 
     const rowData = [];
     for (
-      let overlayRowIndex = 0;
-      overlayRowIndex < overlayValues.length;
-      overlayRowIndex++
+      let mergeRowIndex = 0;
+      mergeRowIndex < mergeValues.length;
+      mergeRowIndex++
     ) {
-      const overlayValue = overlayValues[overlayRowIndex];
-      if (overlayRowIndex === 0 || ignoresRow(overlayValue)) {
+      const mergeValue = mergeValues[mergeRowIndex];
+      if (mergeRowIndex === 0 || ignoresRow(mergeValue)) {
         continue;
       }
 
@@ -184,13 +184,13 @@ function mergeSheets(
         targetRowIndex++
       ) {
         const targetValue = targetValues[targetRowIndex];
-        if (overlayValue[0] == targetValue[0]) {
+        if (mergeValue[0] == targetValue[0]) {
           matched = true;
 
           for (
-            let overlayColumnIndex = 1;
-            overlayColumnIndex < overlayValue.length;
-            overlayColumnIndex++
+            let mergeColumnIndex = 1;
+            mergeColumnIndex < mergeValue.length;
+            mergeColumnIndex++
           ) {
             for (
               let targetColumnIndex = 1;
@@ -200,11 +200,10 @@ function mergeSheets(
               if (
                 targetValues[0][targetColumnIndex] &&
                 targetValues[0][targetColumnIndex] ==
-                  overlayValues[0][overlayColumnIndex] &&
-                targetValue[targetColumnIndex] !=
-                  overlayValue[overlayColumnIndex]
+                  mergeValues[0][mergeColumnIndex] &&
+                targetValue[targetColumnIndex] != mergeValue[mergeColumnIndex]
               ) {
-                const updateValue = overlayValue[overlayColumnIndex];
+                const updateValue = mergeValue[mergeColumnIndex];
                 targetValues[targetRowIndex][targetColumnIndex] = updateValue;
                 rowData.push({
                   range: `${targetSheetName}!${
@@ -222,8 +221,8 @@ function mergeSheets(
       if (!matched) {
         const updateValue = targetValues[0].map((value) =>
           value
-            ? overlayValue.find(
-                (element, index) => overlayValues[0][index] == value
+            ? mergeValue.find(
+                (element, index) => mergeValues[0][index] == value
               )
             : ""
         );
@@ -259,7 +258,7 @@ function mergeSheets(
   }
 
   return {
-    csvValue: dumpCsv(targetValues),
+    csvText: dumpCsv(targetValues),
     merged: merged,
   };
 }

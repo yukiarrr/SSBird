@@ -11,7 +11,7 @@ const password = "";
 
 function doPost(e) {
   const {
-    csvValue,
+    csvText,
     sheetName,
     rootFolderId,
     spreadsheetPath,
@@ -27,7 +27,7 @@ function doPost(e) {
     throw new Error("Wrong password.");
   }
 
-  sync(csvValue, sheetName, rootFolderId, spreadsheetPath);
+  sync(csvText, sheetName, rootFolderId, spreadsheetPath);
 
   const output = ContentService.createTextOutput();
   output.setMimeType(ContentService.MimeType.JSON);
@@ -35,7 +35,7 @@ function doPost(e) {
   return output;
 }
 
-function sync(csvValue, sheetName, rootFolderId, spreadsheetPath) {
+function sync(csvText, sheetName, rootFolderId, spreadsheetPath) {
   const id = getIdByPath(rootFolderId, spreadsheetPath);
   let spreadsheet;
   if (id) {
@@ -56,7 +56,7 @@ function sync(csvValue, sheetName, rootFolderId, spreadsheetPath) {
   if (!sheet) {
     sheet = spreadsheet.insertSheet(sheetName);
   }
-  const values = parseCsv(csvValue);
+  const values = parseCsv(csvText);
 
   sheet.clearContents();
   sheet.getRange(1, 1, values.length, values[0].length).setValues(values);
