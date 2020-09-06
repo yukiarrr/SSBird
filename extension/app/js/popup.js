@@ -231,6 +231,17 @@ window.popupObject = {};
     );
   };
 
+  const initializeCheckbox = async () => {
+    const createPR = (await chromeStorage.get("inputCreatePR"))[
+      "inputCreatePR"
+    ];
+    const checkboxCreatePR = $("#checkbox-create-pr");
+    checkboxCreatePR.prop("checked", createPR);
+    checkboxCreatePR.change(() =>
+      chromeStorage.set({ inputCreatePR: checkboxCreatePR.is(":checked") })
+    );
+  };
+
   const initializeButtons = async () => {
     const startLoading = (element, loadingText) => {
       $(element)
@@ -319,5 +330,6 @@ window.popupObject = {};
   initializeTab();
   initializeApplySelectizes();
   initializeConfigSelectizes();
+  initializeCheckbox();
   initializeButtons();
 })();
