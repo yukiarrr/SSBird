@@ -139,7 +139,9 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
 - If the Spreadsheet name is example, it will be example.csv on GitHub
 - If the target sheet name is develop, the csv will be pushed to the develop branch
 - Data columns should be written with no spaces on the left and top (A1,B1,C1...)
-- Cells with blank A columns or 1 rows will be ignored in both merging sheets and converting csv, so please use this when making notes (if you're making notes in B3, leave A3 or B1 blank)
+- Cells with blank A columns or 1 rows will be ignored in both merging sheets and converting csv, so please use this when making notes (if you're making notes in D2, leave A2 or D1 blank)
+
+<p align="center"><img width="500" src="https://github.com/yukiarrr/SSBird/raw/master/docs/images/ignore-cell.jpg" alt="SSBird ignore cell"></p>
 
 ### Rules for merging sheets
 

@@ -139,7 +139,9 @@ Chrome拡張とSpreadsheetを用いることで、データの作成から反映
 - Spreadsheet名がexampleなら、GitHub上ではexample.csvとなります
 - ベースとなるシート名がdevelopなら、csvはdevelopブランチにプッシュされます
 - カラムは左・上にスペースを空けず記述してください（A1,B1,C1...）
-- A列またはカラムが空白なセルは、マージ・csv化どちらにおいても無視されるので、メモをする際にご活用ください（B3にメモするのであれば、A3かB1を空白にする）
+- A列またはカラムが空白なセルは、マージ・csv化どちらにおいても無視されるので、メモをする際にご活用ください（D2にメモするのであれば、A2かD1を空白にする）
+
+<p align="center"><img width="500" src="https://github.com/yukiarrr/SSBird/raw/master/docs/images/ignore-cell.jpg" alt="SSBird ignore cell"></p>
 
 ### マージのルール
 
