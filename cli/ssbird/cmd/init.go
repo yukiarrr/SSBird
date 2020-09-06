@@ -14,12 +14,12 @@ var config, serviceAccount string
 
 var initCmd = &cobra.Command{
 	Use:   "init",
-	Short: "Initialize msbird command",
-	Long: `Initialize msbird command.
+	Short: "Initialize ssbird command",
+	Long: `Initialize ssbird command.
 There are two initialization methods.
 The first,
 
-msbird init --config cli-config.json
+ssbird init --config cli-config.json
 
 In this example, OAuth 2.0 is used to authorize Google API.
 The json keys required in --config are as follows.
@@ -37,7 +37,7 @@ The json keys required in --config are as follows.
 
 The second,
 
-msbird init --config cli-config.json --service-account service-account.json
+ssbird init --config cli-config.json --service-account service-account.json
 
 In this example, Service Account is used to authorize Google API.
 The json keys required in --config are as follows.

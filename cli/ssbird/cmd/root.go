@@ -8,7 +8,7 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "msbird",
+	Use:   "ssbird",
 	Short: "CLI for SSBird, master data management tool",
 	Long: `This is the CLI for SSBird, master data management tool.
 This CLI can reflect csv data to Spreadsheet.

@@ -1,8 +1,8 @@
-# msbird
+# ssbird
 
-[English](https://github.com/yukiarrr/SSBird/blob/master/cli/msbird/README.md) / [日本語](https://github.com/yukiarrr/SSBird/blob/master/cli/msbird/README.ja.md)
+[English](https://github.com/yukiarrr/SSBird/blob/master/cli/ssbird/README.md) / [日本語](https://github.com/yukiarrr/SSBird/blob/master/cli/ssbird/README.ja.md)
 
-msbird is CLI tool for SSBird master data management tool.
+ssbird is CLI tool for SSBird master data management tool.
 It can reflect csv data from the CLI to Spreadsheet, and is intended to be used in the CI/CD pipeline.
 
 ## Getting started
@@ -21,41 +21,41 @@ It can reflect csv data from the CLI to Spreadsheet, and is intended to be used 
 Execute the following command.
 
 ```sh
-$ go get -u github.com/yukiarrr/SSBird/cli/msbird
+$ go get -u github.com/yukiarrr/SSBird/cli/ssbird
 ```
 
 If your path contains bin (`export PATH=$PATH:$GOPATH/bin`), you will be able to execute the following command.
 
 ```sh
-$ msbird help
+$ ssbird help
 This is the CLI for SSBird, master data management tool.
 This CLI can reflect csv data to Spreadsheet.
 It is intended to be used on CI/CD pipeline.
 
 Usage:
-  msbird [command]
+  ssbird [command]
 
 Available Commands:
   help        Help about any command
-  init        Initialize msbird command
+  init        Initialize ssbird command
   sync        Sync csv data in Spreadsheet
 
 Flags:
-  -h, --help   help for msbird
+  -h, --help   help for ssbird
 
-Use "msbird [command] --help" for more information about a command.
+Use "ssbird [command] --help" for more information about a command.
 
 ```
 
 ## How to use CLI
 
-Initialize msbird command.
+Initialize ssbird command.
 There are two initialization methods.
 
 #### OAuth 2.0
 
 ```sh
-$ msbird init --config cli-config.json
+$ ssbird init --config cli-config.json
 ```
 
 This method uses OAuth 2.0 to authorize to Google API.
@@ -103,7 +103,7 @@ When you create Refresh Token, specify `https://www.googleapis.com/auth/drive` i
 ### Service Account
 
 ```sh
-$ msbird init --config cli-config.json --service-account service-account.json
+$ ssbird init --config cli-config.json --service-account service-account.json
 ```
 
 This method uses Service Account to authorize to Google API.
@@ -132,13 +132,13 @@ Please specify the key pair of json which will be downloaded after creating Serv
 
 When you use Service Account, **you need to share the `sync.gs` with created Service Account. (add Service Account email address)**
 
-### `msbird sync`
+### `ssbird sync`
 
 Csv data on GitHub is reflected in Spreadsheet.
 When Pull Request is merged into target branch, it is intended that the changes will also be reflected in Spreadsheet.
 
 ```sh
-$ msbird sync --csv-path csvs/example.csv --sheet-name develop
+$ ssbird sync --csv-path csvs/example.csv --sheet-name develop
 ```
 
 In this example, create "csvs" folder and "example" spreadsheet in Google Drive if they don't exist,

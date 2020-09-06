@@ -35,7 +35,7 @@ var syncCmd = &cobra.Command{
 	Long: `Sync csv data in Spreadsheet.
 For example,
 
-msbird sync --csv-path csvs/example.csv --sheet-name develop
+ssbird sync --csv-path csvs/example.csv --sheet-name develop
 
 In this example, create "csvs" folder and "example" spreadsheet in Google Drive if they don't exist,
 then create "develop" sheet if it doesn't exist and write the csv data to it.
