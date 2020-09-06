@@ -2,7 +2,7 @@
 <h2 align="center">SSBird</h2>
 <p align="center"><a href="https://github.com/yukiarrr/SSBird/blob/master/README.md">English</a> / <a href="https://github.com/yukiarrr/SSBird/blob/master/README.ja.md">日本語</a></p>
 
-This is a master data management tool that can merge sheets in Spreadsheet and push it to GitHub as csv, using only the Chrome Extension.
+This is the master data management tool that made it possible to do from the creation of the data to the reflection **only in Chrome** by using Chrome Extension and Spreadsheet.
 
 <p align="center"><img width="700" src="https://github.com/yukiarrr/SSBird/raw/master/docs/images/ssbird.gif" alt="SSBird gif"></p>
 
@@ -16,9 +16,10 @@ This is a master data management tool that can merge sheets in Spreadsheet and p
 - [How to use](#how-to-use)
   - [Support dark mode](#support-dark-mode)
   - [Parameter description](#parameter-description)
-  - [Push a sheet directly to GitHub](#push-a-sheet-directly-to-github)
-  - [Merge sheets and push it to GitHub](#merge-sheets-and-push-it-to-github)
-  - [Push multiple Spreadsheets to GitHub](#push-multiple-spreadsheets-to-github)
+  - [How to reflect a sheet directly](#how-to-reflect-a-sheet-directly)
+  - [How to merge and reflect sheets](#how-to-merge-and-reflect-sheets)
+  - [How to reflect data from multiple Spreadsheets](#how-to-reflect-data-from-multiple-spreadsheets)
+  - [How to create Pull Request](#how-to-create-pull-request)
 - [Rules for merging sheets and converting csv](#rules-for-merging-sheets-and-converting-csv)
   - [Basic rules](#basic-rules)
   - [Rules for merging sheets](#rules-for-merging-sheets)
@@ -30,7 +31,7 @@ Of these, SSBird minimizes the cost of managing master data by taking care of th
 
 <p align="center"><img width="500" src="https://github.com/yukiarrr/SSBird/raw/master/docs/images/ssbird-role.jpg" alt="SSBird role"></p>
 
-It is also configured to minimize the cost of deploying this tool by using Spreadsheet and making it serverless.  
+It also has features for merging sheets and creating Pull Request in consideration of parallel work by multiple people and data checking in CI. 
 As an operational flow, we assume that when a csv is pushed to GitHub, it is imported into the database on CI/CD.
 
 ## Getting started
@@ -99,7 +100,7 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
 |Parent Branch|The name of the branch to use as a parent if the branch with Target Sheet name does not exist and is newly created.|
 |Create Pull Request|When it is on, the sheet specified in Target Sheet is not updated and Pull Request is created instead.|
 
-### Push a sheet directly to GitHub
+### How to reflect the sheet directly
 
 1. Create the sheet and data that you want to reflect in Spreadsheet
 2. Press the SSBird icon at the top right
@@ -107,7 +108,7 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
 4. press "Apply"
 5. if "Success 🎉" comes up, it's a success!
 
-### Merge sheets and push it to GitHub
+### How to merge and reflect sheets
 
 1. In Spreadsheet, create a sheet to overwrite the data separately from the sheet you want to reflect (please write a column in the sheet for overwriting)
 2. Please write only the data you want to overwrite in the sheet you want to overwrite
@@ -116,13 +117,20 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
 5. press "Apply"
 6. if "Success 🎉" comes up, it's a success!
 
-### Push multiple Spreadsheets to GitHub
+### How to reflect data from multiple Spreadsheets
 
-1. Go to the Google Drive folder screen that contains Spreadsheet you want to reflect.
-2. In the 'Apply Spreadsheets' section, select Spreadsheet you want to reflect.
-3. As for "Target Sheet" and "Merge Sheets", it is the same as [Merge sheets and push it to GitHub](#merge-sheets-and-push-it-to-github), and is applied to all selected Spreadsheets.
-4. press "Apply".
+1. Go to the Google Drive folder screen that contains Spreadsheet you want to reflect
+2. In the 'Apply Spreadsheets' section, select Spreadsheet you want to reflect
+3. As for "Target Sheet" and "Merge Sheets", it is the same as [How to merge and reflect sheets](#how-to-merge-and-reflect-sheets), and is applied to all selected Spreadsheets
+4. press "Apply"
 5. if "Success 🎉" comes up, it's a success!
+
+### How to create Pull Request
+
+1. turn on the "Create Pull Request"
+2. As for "Target Sheet" and "Merge Sheets", it is the same as [How to merge and reflect sheets](#how-to-merge-and-reflect-sheets)
+3. press "Apply"
+4. if "Success 🎉" comes up, it's a success! (In Pull Request, "Target Sheet" is base branch, "Merge Sheets" is head)
 
 ## Rules for merging sheets and converting csv
 

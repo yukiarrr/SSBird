@@ -2,7 +2,7 @@
 <h2 align="center">SSBird</h2>
 <p align="center"><a href="https://github.com/yukiarrr/SSBird/blob/master/README.md">English</a> / <a href="https://github.com/yukiarrr/SSBird/blob/master/README.ja.md">日本語</a></p>
 
-Chrome拡張だけで、Spreadsheetのシート同士をマージし、それをcsvとしてGitHubにプッシュすることができるマスタデータ管理ツールです。
+Chrome拡張とSpreadsheetを用いることで、データの作成から反映までを**Chromeだけで**出来るようにしたマスタデータ管理ツールです。
 
 <p align="center"><img width="700" src="https://github.com/yukiarrr/SSBird/raw/master/docs/images/ssbird.gif" alt="SSBird gif"></p>
 
@@ -16,9 +16,10 @@ Chrome拡張だけで、Spreadsheetのシート同士をマージし、それを
 - [使い方](#使い方)
   - [ダークモードをサポート](#ダークモードをサポート)
   - [各パラメータの説明](#各パラメータの説明)
-  - [シートを直接GitHubにプッシュする](#シートを直接GitHubにプッシュする)
-  - [シート同士をマージしてGitHubにプッシュする](#シート同士をマージしてGitHubにプッシュする)
-  - [複数のSpreadsheetをGitHubにプッシュする](#複数のSpreadsheetをGitHubにプッシュする)
+  - [シートを直接反映する方法](#シートを直接反映する方法)
+  - [シート同士をマージして反映する方法](#シート同士をマージして反映する方法)
+  - [複数のSpreadsheetのデータを反映する方法](#複数のSpreadsheetのデータを反映する方法)
+  - [Pull Requestを作る方法](#Pull-Requestを作る方法)
 - [シートのマージ・csv化のルール](#シートのマージcsv化のルール)
   - [基本のルール](#基本のルール)
   - [マージのルール](#マージのルール)
@@ -30,7 +31,7 @@ Chrome拡張だけで、Spreadsheetのシート同士をマージし、それを
 
 <p align="center"><img width="500" src="https://github.com/yukiarrr/SSBird/raw/master/docs/images/ssbird-role.jpg" alt="SSBird role"></p>
 
-また、Spreadsheetを利用したりサーバーレスにすることで、このツールの導入自体に必要なことも最小限に抑える構成となっています。  
+また、複数人での並行作業やCIでのデータチェックを考慮して、シート同士のマージ機能やPull Requestを作成する機能も備えています。
 なお、運用フローとしては、GitHubにcsvがプッシュされたことをトリガーに、CI/CDで各プロジェクトごとに必要なデータの反映することを想定しています。
 
 ## 導入手順
@@ -99,7 +100,7 @@ Chrome拡張だけで、Spreadsheetのシート同士をマージし、それを
 |Parent Branch|Target Sheet名のブランチが存在せず、新しく作成される場合の派生元となるブランチ名|
 |Create Pull Request|オンの場合、Target Sheetで指定したシートは更新されず、代わりにPull Requestが作成される|
 
-### シートを直接GitHubにプッシュする
+### シートを直接反映する方法
 
 1. Spreadsheetで反映したいシートとデータを作成してください
 2. 右上のSSBirdアイコンを押してください
@@ -107,7 +108,7 @@ Chrome拡張だけで、Spreadsheetのシート同士をマージし、それを
 4. 「Apply」を押してください
 5. 「Success 🎉」が出れば成功です
 
-### シート同士をマージしてGitHubにプッシュする
+### シート同士をマージして反映する方法
 
 1. Spreadsheetで、反映したいシートとは別に、データを上書きするためのシートを作成してください（上書き用のシートにも、カラムを記述してください）
 2. 上書きしたいシートには、上書きしたいデータのみ記述してください
@@ -116,13 +117,20 @@ Chrome拡張だけで、Spreadsheetのシート同士をマージし、それを
 4. 「Apply」を押してください
 5. 「Success 🎉」が出れば成功です
 
-### 複数のSpreadsheetをGitHubにプッシュする
+### 複数のSpreadsheetのデータを反映する方法
 
 1. 反映したいSpreadsheetの入ったGoogle Driveのフォルダ画面に移動してください
-2. 「Apply Spreadsheets」に、反映したいSpreadsheetを選択してください
-3. 「Target Sheet」「Merge Sheets」に関しては、「[シート同士をマージしてGitHubにプッシュする](#シート同士をマージしてGitHubにプッシュする)」と同様で、選択したSpreadsheet全てに適応されます
+2. 「Apply Spreadsheets」で、反映したいSpreadsheetを選択してください
+3. 「Target Sheet」「Merge Sheets」に関しては、「[シート同士をマージして反映する方法](#シート同士をマージして反映する方法)」と同じ仕様で、選択したSpreadsheet全てに適応されます
 4. 「Apply」を押してください
 5. 「Success 🎉」が出れば成功です
+
+### Pull Requestを作る方法
+
+1. 「Create Pull Request」にチェックを入れてください
+2. 「Target Sheet」「Merge Sheets」に関しては、「[シート同士をマージして反映する方法](#シート同士をマージして反映する方法)」と同じ仕様です
+3. 「Apply」を押してください
+4. 「Success 🎉」が出れば成功です（「Target Sheet」がマージ先のブランチ名、「Merge Sheets」がマージするブランチ名になります）
 
 ## シートのマージ・csv化のルール
 
