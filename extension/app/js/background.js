@@ -52,11 +52,9 @@ backgroundObject.initialize = async (args) => {
 
   port.postMessage({
     functionType: FunctionType.Initialize,
-    repositoryUrl:
-      backgroundObject.repositoryUrl.replace(
-        "https://",
-        `https://${backgroundObject.gitHubUsername}:${backgroundObject.gitHubAccessToken}@`
-      ) + ".git",
+    repositoryUrl: backgroundObject.repositoryUrl,
+    username: backgroundObject.gitHubUsername,
+    gitHubAccessToken: backgroundObject.gitHubAccessToken,
   });
 };
 
@@ -73,6 +71,7 @@ backgroundObject.apply = async (args) => {
     overlaySheetNames,
     commitMessage,
     parentBranchName,
+    createPR,
     callback,
   } = args;
   backgroundObject.applyCallback = callback;
@@ -96,6 +95,7 @@ backgroundObject.apply = async (args) => {
           spreadsheetId: spreadsheetId,
           targetSheetName: targetSheetName,
           overlaySheetNames: overlaySheetNames,
+          notUpdateSheet: createPR,
           rootFolderId: backgroundObject.rootFolderId,
           applyPassword: backgroundObject.applyPassword,
         }),
@@ -135,14 +135,28 @@ backgroundObject.apply = async (args) => {
     return;
   }
 
-  const parentBranchNames = [parentBranchName].concat(overlaySheetNames);
+  let targetBranchName = targetSheetName;
+  let parentBranchNames = [parentBranchName];
+  let prTitle = "";
+  let prBaseBranchName = "";
+  if (createPR) {
+    targetBranchName = overlaySheetNames.slice(-1)[0];
+    parentBranchNames.push(targetSheetName);
+    prBaseBranchName = targetSheetName;
+    prTitle = `[MasterBird] ${targetBranchName} to ${prBaseBranchName} by ${backgroundObject.gitHubUsername}`;
+  } else {
+    parentBranchNames = parentBranchNames.concat(overlaySheetNames);
+  }
   port.postMessage({
     functionType: FunctionType.Apply,
-    targetBranchName: targetSheetName,
-    parentBranchNames: parentBranchNames,
-    commitMessage: commitMessage,
     username: backgroundObject.gitHubUsername,
     email: backgroundObject.gitHubEmail,
+    targetBranchName: targetBranchName,
+    parentBranchNames: parentBranchNames,
+    commitMessage: commitMessage,
+    createPR: createPR,
+    prTitle: prTitle,
+    prBaseBranchName: prBaseBranchName,
     csvs: csvs,
   });
 };
@@ -158,7 +172,11 @@ port.onMessage.addListener((message) => {
     if (!backgroundObject.isInitialized) {
       backgroundObject.isInitialized = true;
     } else {
-      alert("Success 🎉");
+      let alertMessage = "Success 🎉";
+      if (message.prUrl) {
+        alertMessage += `\n\nPull Request:\n${message.prUrl}`;
+      }
+      alert(alertMessage);
     }
   } else {
     alert(message.errorMessage);

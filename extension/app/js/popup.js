@@ -304,6 +304,7 @@ window.popupObject = {};
           overlaySheetNames: popupObject.overlaySheetsSelectize.items,
           commitMessage: $("#textarea-commit-message").val(),
           parentBranchName: $("#text-parent-branch").val(),
+          createPR: $("#checkbox-create-pr").is(":checked"),
           callback: () => {
             stopLoading("#btn-apply", "Apply");
             isApplying = false;
