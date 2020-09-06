@@ -87,7 +87,7 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
 
 |light|dark|
 |:-:|:-:|
-|<p align="center"><img width="250" src="https://github.com/yukiarrr/SSBird/raw/master/docs/images/light.png" alt="SSBird light mode"></p>|<p align="center"><img width="250" src="https://github.com/yukiarrr/SSBird/raw/master/docs/images/dark.png" alt="SSBird dark mode"></p>|
+|<p align="center"><img width="250" src="https://github.com/yukiarrr/SSBird/raw/master/docs/images/light.jpg" alt="SSBird light mode"></p>|<p align="center"><img width="250" src="https://github.com/yukiarrr/SSBird/raw/master/docs/images/dark.jpg" alt="SSBird dark mode"></p>|
 
 ### Parameter description
 

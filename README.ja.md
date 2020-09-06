@@ -87,7 +87,7 @@ Chrome拡張とSpreadsheetを用いることで、データの作成から反映
 
 |ライト|ダーク|
 |:-:|:-:|
-|<p align="center"><img width="250" src="https://github.com/yukiarrr/SSBird/raw/master/docs/images/light.png" alt="SSBird light mode"></p>|<p align="center"><img width="250" src="https://github.com/yukiarrr/SSBird/raw/master/docs/images/dark.png" alt="SSBird dark mode"></p>|
+|<p align="center"><img width="250" src="https://github.com/yukiarrr/SSBird/raw/master/docs/images/light.jpg" alt="SSBird light mode"></p>|<p align="center"><img width="250" src="https://github.com/yukiarrr/SSBird/raw/master/docs/images/dark.jpg" alt="SSBird dark mode"></p>|
 
 ### 各パラメータの説明
 
