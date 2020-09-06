@@ -20,7 +20,7 @@ import (
 )
 
 type SyncRequest struct {
-	CsvValue        string `json:"csvValue"`
+	CsvText         string `json:"csvText"`
 	SheetName       string `json:"sheetName"`
 	RootFolderId    string `json:"rootFolderId"`
 	SpreadsheetPath string `json:"spreadsheetPath"`
@@ -86,13 +86,13 @@ func sync() error {
 	repositoryUrl := viper.GetString("repositoryUrl")
 	const gitHubSubstr = "github.com/"
 	csvUrl := fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/%s", repositoryUrl[strings.Index(repositoryUrl, gitHubSubstr)+len(gitHubSubstr):], sheetName, csvPath)
-	csvValue, err := request("GET", csvUrl, viper.GetString("gitHubAccessToken"), nil)
+	csvText, err := request("GET", csvUrl, viper.GetString("gitHubAccessToken"), nil)
 	if err != nil {
 		return err
 	}
 
 	syncRequest := new(SyncRequest)
-	syncRequest.CsvValue = csvValue
+	syncRequest.CsvText = csvText
 	syncRequest.SheetName = sheetName
 	syncRequest.RootFolderId = viper.GetString("rootFolderId")
 	spreadsheetPath := csvPath

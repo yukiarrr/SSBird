@@ -28,7 +28,7 @@ function doPost(e) {
     throw new Error("Wrong password.");
   }
 
-  const { csvValue, merged } = mergeSheets(
+  const { csvText, merged } = mergeSheets(
     spreadsheetId,
     targetSheetName,
     overlaySheetNames,
@@ -37,7 +37,7 @@ function doPost(e) {
   if (merged) {
     response["csv"] = {
       path: getFullPath(spreadsheetId, rootFolderId),
-      value: csvValue,
+      value: csvText,
     };
   }
 
@@ -66,7 +66,7 @@ function mergeSheets(
   if (overlaySheetNames.length === 0) {
     // Target sheet only
     return {
-      csvValue: dumpCsv(targetValues),
+      csvText: dumpCsv(targetValues),
       merged: true,
     };
   }
@@ -259,7 +259,7 @@ function mergeSheets(
   }
 
   return {
-    csvValue: dumpCsv(targetValues),
+    csvText: dumpCsv(targetValues),
     merged: merged,
   };
 }
