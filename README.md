@@ -43,7 +43,7 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
 3. Open the code editor, overwrite it with the code in `SSBird/gas/apply.gs` and save it
 4. (optional) In line 8 of the `apply.gs`, enter your password like `const password = "Enter a random password here";` (it will be required as Apply Password when the Chrome extension is installed)
 5. From the status bar above, go to `Resources > Advanced Google services...` and turn on "Google Sheets API"
-6. From the status bar above, select `Publish > Deploy as Web app...` and change the permissions under "Who has access to the app" so that SSBird members can access it, then press "Update"
+6. From the status bar above, select `Publish > Deploy as Web app...` and change the permissions under "Who has access to the app" so that SSBird members can access it, then press "Deploy"
 7. You will be asked to approve it after the update, so follow the instructions to approve it
 8. Edit SSBird/examples/extension-config.json with reference to [this](#about-extension-configjson) (use the URL that appears after the completion of step 5 of this procedure for applyUrl)
 9. Right-click on the configuration file in a location on Google Drive that your team members can access and upload the `extension-config.json` that you edited in `Upload files`
