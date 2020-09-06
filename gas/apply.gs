@@ -59,9 +59,9 @@ function mergeSheets(
     targetSheet = spreadsheet.insertSheet(targetSheetName);
   }
 
-  let targetValues = notUpdateSheet
-    ? [[]]
-    : targetSheet.getDataRange().getDisplayValues();
+  let targetValues = targetSheet
+    ? targetSheet.getDataRange().getDisplayValues()
+    : [[]];
 
   if (mergeSheetNames.length === 0) {
     // Target sheet only
