@@ -1,6 +1,6 @@
 package main
 
-import "github.com/yukiarrr/MasterBird/cli/msbird/cmd"
+import "github.com/yukiarrr/SSBird/cli/msbird/cmd"
 
 func main() {
 	cmd.Execute()

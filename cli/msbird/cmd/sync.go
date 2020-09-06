@@ -68,7 +68,7 @@ func readConfig() error {
 	if err != nil {
 		return err
 	}
-	viper.SetConfigFile(filepath.Join(configDir, "MasterBird", "cli-config.json"))
+	viper.SetConfigFile(filepath.Join(configDir, "SSBird", "cli-config.json"))
 	err = viper.ReadInConfig()
 	if err != nil {
 		return err
@@ -163,7 +163,7 @@ func getGoogleAccessToken() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	msDir := filepath.Join(configDir, "MasterBird")
+	msDir := filepath.Join(configDir, "SSBird")
 	saPath := filepath.Join(msDir, "service-account.json")
 
 	var token *oauth2.Token

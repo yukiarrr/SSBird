@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "name": "MasterBird",
+  "name": "SSBird",
   "version": "1.0",
   "description": "Merge sheets in Spreadsheet and push it to GitHub as csv",
   "icons": {
@@ -9,7 +9,7 @@
     "128": "icons/128.png"
   },
   "page_action": {
-    "default_title": "MasterBird",
+    "default_title": "SSBird",
     "default_popup": "popup.html"
   },
   "background": {

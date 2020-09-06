@@ -1,4 +1,4 @@
-module github.com/yukiarrr/MasterBird/cli/msbird
+module github.com/yukiarrr/SSBird/cli/msbird
 
 go 1.14
 

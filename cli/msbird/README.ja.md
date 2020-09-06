@@ -1,19 +1,19 @@
 # msbird
 
-[English](https://github.com/yukiarrr/MasterBird/blob/master/cli/msbird/README.md) / [日本語](https://github.com/yukiarrr/MasterBird/blob/master/cli/msbird/README.ja.md)
+[English](https://github.com/yukiarrr/SSBird/blob/master/cli/msbird/README.md) / [日本語](https://github.com/yukiarrr/SSBird/blob/master/cli/msbird/README.ja.md)
 
-msbirdはマスタデータ管理ツール「MasterBird」のCLIツールです。
+msbirdはマスタデータ管理ツール「SSBird」のCLIツールです。
 CLIからcsvのデータをスプレットシートに反映することができ、CI/CDパイプライン上での使用を想定しています。
 
 ## 導入手順
 
 ### サーバー側
 
-1. [Releases](https://github.com/yukiarrr/MasterBird/releases)から、使用したいバージョンの`MasterBird-vX.X.X.Server.zip`をダウンロードし、解凍してください
+1. [Releases](https://github.com/yukiarrr/SSBird/releases)から、使用したいバージョンの`SSBird-vX.X.X.Server.zip`をダウンロードし、解凍してください
 2. スクリプトを保存したいGoogle Drive上の場所で右クリックし、`その他 > Google Apps Script`を選択してください（`apply.gs`とは別で作成してください）
-3. コードエディタが開くので、`MasterBird/gas/sync.gs`のコードで上書き後に保存してください
+3. コードエディタが開くので、`SSBird/gas/sync.gs`のコードで上書き後に保存してください
 4. （省略可能）`sync.gs`の8行目に、`const password = "ここにランダムなパスワードを入力";`のようにパスワードを入力してください（`cli-config.json`の`"syncPassword"`として必要となります）
-5. 上のステータスバーから、`公開 > ウェブ アプリケーションとして導入...`を選択し、「Who has access to the app」でMasterBirdを使用するメンバーがアクセスできるように権限を変更してから「更新」を押してください
+5. 上のステータスバーから、`公開 > ウェブ アプリケーションとして導入...`を選択し、「Who has access to the app」でSSBirdを使用するメンバーがアクセスできるように権限を変更してから「更新」を押してください
 6. 更新後に承認を求められるので、説明に従って承認してください
 
 ### CLI側
@@ -21,14 +21,14 @@ CLIからcsvのデータをスプレットシートに反映することがで�
 以下のコマンドを実行してください。
 
 ```sh
-$ go get -u github.com/yukiarrr/MasterBird/cli/msbird
+$ go get -u github.com/yukiarrr/SSBird/cli/msbird
 ```
 
 binにパスが通っていれば（`export PATH=$PATH:$GOPATH/bin`）、以下のコマンドが実行できるようになります。
 
 ```sh
 $ msbird help
-This is the CLI for MasterBird, master data management tool.
+This is the CLI for SSBird, master data management tool.
 This CLI can reflect csv data to Spreadsheet.
 It is intended to be used on CI/CD pipeline.
 

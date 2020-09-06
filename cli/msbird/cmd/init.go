@@ -81,7 +81,7 @@ func initConfig() error {
 	if err != nil {
 		return err
 	}
-	msDir := filepath.Join(configDir, "MasterBird")
+	msDir := filepath.Join(configDir, "SSBird")
 	_ = os.MkdirAll(msDir, 0755)
 	err = viper.WriteConfigAs(filepath.Join(msDir, "cli-config.json"))
 	if err != nil {

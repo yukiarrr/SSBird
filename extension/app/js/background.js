@@ -143,7 +143,7 @@ backgroundObject.apply = async (args) => {
     targetBranchName = mergeSheetNames.slice(-1)[0];
     parentBranchNames.push(targetSheetName);
     prBaseBranchName = targetSheetName;
-    prTitle = `[MasterBird] ${targetBranchName} to ${prBaseBranchName} by ${backgroundObject.gitHubUsername}`;
+    prTitle = `[SSBird] ${targetBranchName} to ${prBaseBranchName} by ${backgroundObject.gitHubUsername}`;
   } else {
     parentBranchNames = parentBranchNames.concat(mergeSheetNames);
   }
@@ -161,7 +161,7 @@ backgroundObject.apply = async (args) => {
   });
 };
 
-const port = chrome.runtime.connectNative("com.yukiarrr.masterbird");
+const port = chrome.runtime.connectNative("com.yukiarrr.ssbird");
 port.onMessage.addListener((message) => {
   backgroundObject.isInitializing = false;
   backgroundObject.isApplying = false;
