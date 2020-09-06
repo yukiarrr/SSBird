@@ -1,4 +1,4 @@
-// SSBird v0.6.1
+// SSBird v0.7.0
 // https://github.com/yukiarrr/SSBird
 // MIT License
 
