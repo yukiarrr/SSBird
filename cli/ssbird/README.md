@@ -13,7 +13,7 @@ It can reflect csv data from the CLI to Spreadsheet, and is intended to be used 
 2. Right-click on the location on Google Drive where you want to save the script and select `More > Google Apps Script` (please create it separate from `apply.gs`)
 3. Open the code editor, overwrite it with the code in `SSBird/gas/sync.gs` and save it
 4. (optional) In line 8 of the `sync.gs`, enter your password like `const password = "Enter a random password here";` (it will be required as `"syncPassword"` in `cli-config.json`)
-5. From the status bar above, select `Publish > Deploy as Web app...` and change the permissions under "Who has access to the app" so that SSBird members can access it, then press "Update"
+5. From the status bar above, select `Publish > Deploy as Web app...` and change the permissions under "Who has access to the app" so that SSBird members can access it, then press "Deploy"
 6. You will be asked to approve it after the update, so follow the instructions to approve it
 
 ### CLI side

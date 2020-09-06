@@ -43,7 +43,7 @@ Chrome拡張とSpreadsheetを用いることで、データの作成から反映
 3. コードエディタが開くので、`SSBird/gas/apply.gs`のコードで上書き後に保存してください
 4. （省略可能）`apply.gs`の8行目に、`const password = "ここにランダムなパスワードを入力";`のようにパスワードを入力してください（Chrome拡張導入時にApply Passwordとして必要となります）
 5. 上のステータスバーから、`リソース > Google の拡張サービス...`を選択し、「Google Sheets API」をONにしてください
-6. 上のステータスバーから、`公開 > ウェブ アプリケーションとして導入...`を選択し、「Who has access to the app」でSSBirdを使用するメンバーがアクセスできるように権限を変更してから「更新」を押してください
+6. 上のステータスバーから、`公開 > ウェブ アプリケーションとして導入...`を選択し、「Who has access to the app」でSSBirdを使用するメンバーがアクセスできるように権限を変更してから「Deploy」を押してください
 7. 更新後に承認を求められるので、説明に従って承認してください
 8. [こちら](#extension-configjsonについて)を参考に、`SSBird/examples/extension-config.json`を編集します（applyUrlはこの手順の5の完了後に表示されるURLを使用してください）
 9. 設定ファイルをチームメンバーがアクセスできるGoogle Drive上の場所で右クリックし、`ファイルをアップロード`で編集した`extension-config.json`をアップロードします
