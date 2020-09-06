@@ -35,7 +35,7 @@ var syncCmd = &cobra.Command{
 	Long: `Sync csv data in Spreadsheet.
 For example,
 
-msbird sync --csv-path csvs/example.csv --sheet-name develop
+ssbird sync --csv-path csvs/example.csv --sheet-name develop
 
 In this example, create "csvs" folder and "example" spreadsheet in Google Drive if they don't exist,
 then create "develop" sheet if it doesn't exist and write the csv data to it.
@@ -68,7 +68,7 @@ func readConfig() error {
 	if err != nil {
 		return err
 	}
-	viper.SetConfigFile(filepath.Join(configDir, "MasterBird", "cli-config.json"))
+	viper.SetConfigFile(filepath.Join(configDir, "SSBird", "cli-config.json"))
 	err = viper.ReadInConfig()
 	if err != nil {
 		return err
@@ -163,7 +163,7 @@ func getGoogleAccessToken() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	msDir := filepath.Join(configDir, "MasterBird")
+	msDir := filepath.Join(configDir, "SSBird")
 	saPath := filepath.Join(msDir, "service-account.json")
 
 	var token *oauth2.Token

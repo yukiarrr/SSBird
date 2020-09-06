@@ -1,4 +1,4 @@
-module github.com/yukiarrr/MasterBird/extension/host
+module github.com/yukiarrr/SSBird/extension/host
 
 go 1.14
 

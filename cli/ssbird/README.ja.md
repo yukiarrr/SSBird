@@ -1,19 +1,19 @@
-# msbird
+# ssbird
 
-[English](https://github.com/yukiarrr/MasterBird/blob/master/cli/msbird/README.md) / [日本語](https://github.com/yukiarrr/MasterBird/blob/master/cli/msbird/README.ja.md)
+[English](https://github.com/yukiarrr/SSBird/blob/master/cli/ssbird/README.md) / [日本語](https://github.com/yukiarrr/SSBird/blob/master/cli/ssbird/README.ja.md)
 
-msbirdはマスタデータ管理ツール「MasterBird」のCLIツールです。
+ssbirdはマスタデータ管理ツール「SSBird」のCLIツールです。
 CLIからcsvのデータをスプレットシートに反映することができ、CI/CDパイプライン上での使用を想定しています。
 
 ## 導入手順
 
 ### サーバー側
 
-1. [Releases](https://github.com/yukiarrr/MasterBird/releases)から、使用したいバージョンの`MasterBird-vX.X.X.Server.zip`をダウンロードし、解凍してください
+1. [Releases](https://github.com/yukiarrr/SSBird/releases)から、使用したいバージョンの`SSBird-vX.X.X.Server.zip`をダウンロードし、解凍してください
 2. スクリプトを保存したいGoogle Drive上の場所で右クリックし、`その他 > Google Apps Script`を選択してください（`apply.gs`とは別で作成してください）
-3. コードエディタが開くので、`MasterBird/gas/sync.gs`のコードで上書き後に保存してください
+3. コードエディタが開くので、`SSBird/gas/sync.gs`のコードで上書き後に保存してください
 4. （省略可能）`sync.gs`の8行目に、`const password = "ここにランダムなパスワードを入力";`のようにパスワードを入力してください（`cli-config.json`の`"syncPassword"`として必要となります）
-5. 上のステータスバーから、`公開 > ウェブ アプリケーションとして導入...`を選択し、「Who has access to the app」でMasterBirdを使用するメンバーがアクセスできるように権限を変更してから「更新」を押してください
+5. 上のステータスバーから、`公開 > ウェブ アプリケーションとして導入...`を選択し、「Who has access to the app」でSSBirdを使用するメンバーがアクセスできるように権限を変更してから「更新」を押してください
 6. 更新後に承認を求められるので、説明に従って承認してください
 
 ### CLI側
@@ -21,43 +21,43 @@ CLIからcsvのデータをスプレットシートに反映することがで�
 以下のコマンドを実行してください。
 
 ```sh
-$ go get -u github.com/yukiarrr/MasterBird/cli/msbird
+$ go get -u github.com/yukiarrr/SSBird/cli/ssbird
 ```
 
 binにパスが通っていれば（`export PATH=$PATH:$GOPATH/bin`）、以下のコマンドが実行できるようになります。
 
 ```sh
-$ msbird help
-This is the CLI for MasterBird, master data management tool.
+$ ssbird help
+This is the CLI for SSBird, master data management tool.
 This CLI can reflect csv data to Spreadsheet.
 It is intended to be used on CI/CD pipeline.
 
 Usage:
-  msbird [command]
+  ssbird [command]
 
 Available Commands:
   help        Help about any command
-  init        Initialize msbird command
+  init        Initialize ssbird command
   sync        Sync csv data in Spreadsheet
 
 Flags:
-  -h, --help   help for msbird
+  -h, --help   help for ssbird
 
-Use "msbird [command] --help" for more information about a command.
+Use "ssbird [command] --help" for more information about a command.
 
 ```
 
 ## CLIの使い方
 
-### `msbird init`
+### `ssbird init`
 
-msbirdコマンドを初期化します。
+ssbirdコマンドを初期化します。
 初期化する方法は二つあります。
 
 #### OAuth 2.0を使った方法
 
 ```sh
-$ msbird init --config cli-config.json
+$ ssbird init --config cli-config.json
 ```
 
 この方法では、Google APIの認証にOAuth 2.0を使用します。
@@ -105,7 +105,7 @@ $ msbird init --config cli-config.json
 ### Service Accountを使った方法
 
 ```sh
-$ msbird init --config cli-config.json --service-account service-account.json
+$ ssbird init --config cli-config.json --service-account service-account.json
 ```
 
 この方法では、Google APIの認証にService Accountを使用します。
@@ -134,13 +134,13 @@ $ msbird init --config cli-config.json --service-account service-account.json
 
 なお、Service Accountを使用する場合、**作成した`Service Account`に`sync.gs`を共有する必要があります（メールアドレスの追加）。**
 
-### `msbird sync`
+### `ssbird sync`
 
 GitHub上のcsvデータをスプレットシートに反映します。
 Pull Requestが対象のブランチにマージされた際に、その変更をスプレットシート側にも反映するなどの使用方法を想定しています。
 
 ```sh
-$ msbird sync --csv-path csvs/example.csv --sheet-name develop
+$ ssbird sync --csv-path csvs/example.csv --sheet-name develop
 ```
 
 この例では、Google Driveに「csvs」フォルダと「example」スプレッドシートが存在しない場合は作成後、そのスプレットシートに「develop」シートがなければ作成し、そこにcsvデータを書き込んでいます。
