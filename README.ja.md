@@ -94,7 +94,7 @@ Chrome拡張だけで、Spreadsheetのシート同士をマージし、それを
 |:-:|:-:|
 |Apply Spreadsheets|Applyの対象となるスプレットシート<br />スプレットシート上では自動選択、Google Drive上では複数選択できるようになる|
 |Target Sheet|プッシュの対象となるシート<br />もし存在しなければ、自動で作成される<br />プッシュされるブランチ名はシート名と同じになる|
-|Overlay Sheets|Target Sheetに上書きするシート<br />複数選択可能で、その場合は入力順に上書きされていく|
+|Merge Sheets|Target Sheetに上書きするシート<br />複数選択可能で、その場合は入力順に上書きされていく|
 |Parent Branch|Target Sheet名のブランチが存在せず、新しく作成される場合の派生元となるブランチ名|
 
 ### シートを直接GitHubにプッシュする
@@ -110,7 +110,7 @@ Chrome拡張だけで、Spreadsheetのシート同士をマージし、それを
 1. Spreadsheetで、反映したいシートとは別に、データを上書きするためのシートを作成してください（上書き用のシートにも、カラムを記述してください）
 2. 上書きしたいシートには、上書きしたいデータのみ記述してください
 3. 「Target Sheet」で、反映したいシートを選択してください
-4. 「Overlay Sheets」で、上書きするデータを記述したシートを選択してください（複数選択可で、選択順に上書きしていきます）
+4. 「Merge Sheets」で、上書きするデータを記述したシートを選択してください（複数選択可で、選択順に上書きしていきます）
 4. 「Apply」を押してください
 5. 「Success 🎉」が出れば成功です
 
@@ -118,7 +118,7 @@ Chrome拡張だけで、Spreadsheetのシート同士をマージし、それを
 
 1. 反映したいSpreadsheetの入ったGoogle Driveのフォルダ画面に移動してください
 2. 「Apply Spreadsheets」に、反映したいSpreadsheetを選択してください
-3. 「Target Sheet」「Overlay Sheets」に関しては、「[シート同士をマージしてGitHubにプッシュする](#シート同士をマージしてGitHubにプッシュする)」と同様で、選択したSpreadsheet全てに適応されます
+3. 「Target Sheet」「Merge Sheets」に関しては、「[シート同士をマージしてGitHubにプッシュする](#シート同士をマージしてGitHubにプッシュする)」と同様で、選択したSpreadsheet全てに適応されます
 4. 「Apply」を押してください
 5. 「Success 🎉」が出れば成功です
 

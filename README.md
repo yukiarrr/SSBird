@@ -94,7 +94,7 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
 |:-:|:-:|
 |Apply Spreadsheets|Spreadsheets that are subject to Apply.<br />Automatic selection on Spreadsheet and multiple selections on Google Drive.|
 |Target Sheet|The sheet to be pushed to.<br />If it doesn't exist, it will be created automatically.<br />The name of the branch to be pushed is the same as the name of the sheet.|
-|Overlay Sheets|The sheet to overwrite Target Sheet.<br />Multiple sheets can be selected, in which case, the sheets are overwritten in the order of input.|
+|Merge Sheets|The sheet to overwrite Target Sheet.<br />Multiple sheets can be selected, in which case, the sheets are overwritten in the order of input.|
 |Parent Branch|The name of the branch to use as a parent if the branch with Target Sheet name does not exist and is newly created.|
 
 ### Push a sheet directly to GitHub
@@ -110,7 +110,7 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
 1. In Spreadsheet, create a sheet to overwrite the data separately from the sheet you want to reflect (please write a column in the sheet for overwriting)
 2. Please write only the data you want to overwrite in the sheet you want to overwrite
 3. Select the sheet you want to reflect in the "Target Sheet"
-4. Select the sheet describing the data to be overwritten in "Overlay Sheets" (multiple selections are possible, and the data will be overwritten in the order of selection)
+4. Select the sheet describing the data to be overwritten in "Merge Sheets" (multiple selections are possible, and the data will be overwritten in the order of selection)
 5. press "Apply"
 6. if "Success 🎉" comes up, it's a success!
 
@@ -118,7 +118,7 @@ As an operational flow, we assume that when a csv is pushed to GitHub, it is imp
 
 1. Go to the Google Drive folder screen that contains Spreadsheet you want to reflect.
 2. In the 'Apply Spreadsheets' section, select Spreadsheet you want to reflect.
-3. As for "Target Sheet" and "Overlay Sheets", it is the same as [Merge sheets and push it to GitHub](#merge-sheets-and-push-it-to-github), and is applied to all selected Spreadsheets.
+3. As for "Target Sheet" and "Merge Sheets", it is the same as [Merge sheets and push it to GitHub](#merge-sheets-and-push-it-to-github), and is applied to all selected Spreadsheets.
 4. press "Apply".
 5. if "Success 🎉" comes up, it's a success!
 

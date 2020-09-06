@@ -107,9 +107,7 @@ window.popupObject = {};
           })),
         })[0].selectize;
 
-        popupObject.overlaySheetsSelectize = $(
-          "#select-overlay-sheets"
-        ).selectize({
+        popupObject.mergeSheetsSelectize = $("#select-merge-sheets").selectize({
           plugins: ["remove_button"],
           maxItems: null,
           persist: false,
@@ -312,7 +310,7 @@ window.popupObject = {};
         callBackgroundFunction("apply", {
           spreadsheetIds: popupObject.applySpreadsheetsSelectize.items,
           targetSheetName: popupObject.targetSheetSelectize.items[0],
-          overlaySheetNames: popupObject.overlaySheetsSelectize.items,
+          mergeSheetNames: popupObject.mergeSheetsSelectize.items,
           commitMessage: $("#textarea-commit-message").val(),
           parentBranchName: $("#text-parent-branch").val(),
           createPR: $("#checkbox-create-pr").is(":checked"),
