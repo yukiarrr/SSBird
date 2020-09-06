@@ -94,8 +94,10 @@ Chrome拡張だけで、Spreadsheetのシート同士をマージし、それを
 |:-:|:-:|
 |Apply Spreadsheets|Applyの対象となるスプレットシート<br />スプレットシート上では自動選択、Google Drive上では複数選択できるようになる|
 |Target Sheet|プッシュの対象となるシート<br />もし存在しなければ、自動で作成される<br />プッシュされるブランチ名はシート名と同じになる|
-|Merge Sheets|Target Sheetに上書きするシート<br />複数選択可能で、その場合は入力順に上書きされていく|
+|Merge Sheets|Target Sheetにマージするシート<br />複数選択可能で、その場合は入力順にマージされていく|
+|Commit Message|コミットメッセージ|
 |Parent Branch|Target Sheet名のブランチが存在せず、新しく作成される場合の派生元となるブランチ名|
+|Create Pull Request|オンの場合、Target Sheetで指定したシートは更新されず、代わりにPull Requestが作成される|
 
 ### シートを直接GitHubにプッシュする
 
