@@ -14,6 +14,7 @@ function doPost(e) {
     spreadsheetId,
     targetSheetName,
     overlaySheetNames,
+    notUpdateSheet,
     rootFolderId,
     applyPassword,
   } = JSON.parse(
@@ -30,7 +31,8 @@ function doPost(e) {
   const { csvValue, merged } = mergeSheets(
     spreadsheetId,
     targetSheetName,
-    overlaySheetNames
+    overlaySheetNames,
+    notUpdateSheet
   );
   if (merged) {
     response["csv"] = {
@@ -45,17 +47,26 @@ function doPost(e) {
   return output;
 }
 
-function mergeSheets(spreadsheetId, targetSheetName, overlaySheetNames) {
+function mergeSheets(
+  spreadsheetId,
+  targetSheetName,
+  overlaySheetNames,
+  notUpdateSheet
+) {
   const spreadsheet = SpreadsheetApp.openById(spreadsheetId);
   let targetSheet = spreadsheet.getSheetByName(targetSheetName);
-  if (!targetSheet) {
+  if (!targetSheet && !notUpdateSheet) {
     targetSheet = spreadsheet.insertSheet(targetSheetName);
   }
+
+  let targetValues = notUpdateSheet
+    ? [[]]
+    : targetSheet.getDataRange().getDisplayValues();
 
   if (overlaySheetNames.length === 0) {
     // Target sheet only
     return {
-      csvValue: valuesToCsvs(targetSheet.getDataRange().getDisplayValues()),
+      csvValue: dumpCsv(targetValues),
       merged: true,
     };
   }
@@ -72,36 +83,35 @@ function mergeSheets(spreadsheetId, targetSheetName, overlaySheetNames) {
       continue;
     }
 
-    let targetValues = targetSheet.getDataRange().getDisplayValues();
     const overlayValues = overlaySheet.getDataRange().getDisplayValues();
-    let firstTargetValue = targetValues[0];
-    const firstOverlayValue = overlayValues[0];
     const insertColumnIndices = [];
 
     for (
       let overlayColumnIndex = 0;
-      overlayColumnIndex < firstOverlayValue.length;
+      overlayColumnIndex < overlayValues[0].length;
       overlayColumnIndex++
     ) {
-      const overlayColumnValue = firstOverlayValue[overlayColumnIndex];
+      const overlayColumnValue = overlayValues[0][overlayColumnIndex];
       if (
         overlayColumnValue &&
-        !firstTargetValue.some((value) => value == overlayColumnValue)
+        !targetValues[0].some((value) => value == overlayColumnValue)
       ) {
         insertColumnIndices.push(overlayColumnIndex);
       }
     }
 
-    const targetSheetId = targetSheet.getSheetId();
+    const targetSheetId = targetSheet ? targetSheet.getSheetId() : "";
     const isEmptyTargetSheet = isEmptySheet(targetValues);
     const columnRequests = [];
-    let insertColumns = 0;
 
     for (const insertColumnIndex of insertColumnIndices) {
-      if (
-        !isEmptyTargetSheet &&
-        insertColumnIndex < firstTargetValue.length + insertColumns
-      ) {
+      if (!isEmptyTargetSheet && insertColumnIndex < targetValues[0].length) {
+        targetValues = targetValues.map((value) => {
+          if (value.length > insertColumnIndex) {
+            value.splice(insertColumnIndex, 0, "");
+          }
+          return value;
+        });
         columnRequests.push({
           insertDimension: {
             range: {
@@ -112,9 +122,17 @@ function mergeSheets(spreadsheetId, targetSheetName, overlaySheetNames) {
             },
           },
         });
-        insertColumns++;
       }
 
+      targetValues = targetValues.map((value) =>
+        value.length < insertColumnIndex + 1
+          ? value.concat(
+              ...new Array(insertColumnIndex + 1 - value.length).fill("")
+            )
+          : value
+      );
+      const updateValue = overlayValues[0][insertColumnIndex];
+      targetValues[0][insertColumnIndex] = updateValue;
       columnRequests.push({
         updateCells: {
           rows: [
@@ -122,7 +140,7 @@ function mergeSheets(spreadsheetId, targetSheetName, overlaySheetNames) {
               values: [
                 {
                   userEnteredValue: {
-                    stringValue: firstOverlayValue[insertColumnIndex],
+                    stringValue: updateValue,
                   },
                 },
               ],
@@ -140,21 +158,14 @@ function mergeSheets(spreadsheetId, targetSheetName, overlaySheetNames) {
       });
     }
 
-    if (insertColumnIndices.length > 0) {
+    if (insertColumnIndices.length > 0 && !notUpdateSheet) {
       Sheets.Spreadsheets.batchUpdate(
         { requests: columnRequests },
         spreadsheetId
       );
-
-      SpreadsheetApp.flush();
-
-      targetValues = targetSheet.getDataRange().getDisplayValues();
-      firstTargetValue = targetValues[0];
     }
 
     const rowData = [];
-    let addRows = 0;
-
     for (
       let overlayRowIndex = 0;
       overlayRowIndex < overlayValues.length;
@@ -187,19 +198,20 @@ function mergeSheets(spreadsheetId, targetSheetName, overlaySheetNames) {
               targetColumnIndex++
             ) {
               if (
-                firstTargetValue[targetColumnIndex] &&
-                firstTargetValue[targetColumnIndex] ==
-                  firstOverlayValue[overlayColumnIndex] &&
-                targetValue[targetColumnIndex] !==
+                targetValues[0][targetColumnIndex] &&
+                targetValues[0][targetColumnIndex] ==
+                  overlayValues[0][overlayColumnIndex] &&
+                targetValue[targetColumnIndex] !=
                   overlayValue[overlayColumnIndex]
               ) {
+                const updateValue = overlayValue[overlayColumnIndex];
+                targetValues[targetRowIndex][targetColumnIndex] = updateValue;
                 rowData.push({
                   range: `${targetSheetName}!${
                     columnToLetter(targetColumnIndex + 1) + (targetRowIndex + 1)
                   }`,
-                  values: [[overlayValue[overlayColumnIndex]]],
+                  values: [[updateValue]],
                 });
-                changed = true;
                 break;
               }
             }
@@ -208,33 +220,32 @@ function mergeSheets(spreadsheetId, targetSheetName, overlaySheetNames) {
       }
 
       if (!matched) {
-        addRows++;
-
-        const dataRows = targetValues.length + addRows;
+        const updateValue = targetValues[0].map((value) =>
+          value
+            ? overlayValue.find(
+                (element, index) => overlayValues[0][index] == value
+              )
+            : ""
+        );
+        targetValues.push(updateValue);
         rowData.push({
-          range: `${targetSheetName}!${columnToLetter(1) + dataRows}:${
-            columnToLetter(firstTargetValue.length) + dataRows
-          }`,
-          values: [
-            firstTargetValue.map((value) =>
-              value
-                ? overlayValue.find(
-                    (element, index) => firstOverlayValue[index] == value
-                  )
-                : null
-            ),
-          ],
+          range: `${targetSheetName}!${
+            columnToLetter(1) + targetValues.length
+          }:${columnToLetter(targetValues[0].length) + targetValues.length}`,
+          values: [updateValue],
         });
       }
     }
 
-    const newRows = targetValues.length + addRows;
-    const currentMaxRows = targetSheet.getMaxRows();
-    if (currentMaxRows < newRows) {
-      targetSheet.insertRows(currentMaxRows, newRows - currentMaxRows);
+    const currentMaxRows = targetSheet ? targetSheet.getMaxRows() : 0;
+    if (currentMaxRows < targetValues.length && !notUpdateSheet) {
+      targetSheet.insertRows(
+        currentMaxRows,
+        targetValues.length - currentMaxRows
+      );
     }
 
-    if (rowData.length > 0) {
+    if (rowData.length > 0 && !notUpdateSheet) {
       Sheets.Spreadsheets.Values.batchUpdate(
         {
           valueInputOption: "USER_ENTERED",
@@ -242,20 +253,18 @@ function mergeSheets(spreadsheetId, targetSheetName, overlaySheetNames) {
         },
         spreadsheetId
       );
-
-      SpreadsheetApp.flush();
     }
 
     merged = true;
   }
 
   return {
-    csvValue: valuesToCsvs(targetSheet.getDataRange().getDisplayValues()),
+    csvValue: dumpCsv(targetValues),
     merged: merged,
   };
 }
 
-function valuesToCsvs(values) {
+function dumpCsv(values) {
   return values
     .filter((row) => !ignoresRow(row))
     .map((row) =>

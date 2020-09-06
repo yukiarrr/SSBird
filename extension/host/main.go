@@ -18,6 +18,9 @@ import (
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/go-git/go-git/v5/plumbing/object"
 	"github.com/go-git/go-git/v5/storage/memory"
+
+	"github.com/google/go-github/github"
+	"golang.org/x/oauth2"
 )
 
 type FunctionType int
@@ -36,11 +39,15 @@ type Csv struct {
 type Request struct {
 	FunctionType      FunctionType `json:"functionType"`
 	RepositoryUrl     string       `json:"repositoryUrl"`
+	Username          string       `json:"username"`
+	Email             string       `json:"email"`
+	GitHubAccessToken string       `json:"gitHubAccessToken"`
 	TargetBranchName  string       `json:"targetBranchName"`
 	ParentBranchNames []string     `json:"parentBranchNames"`
 	CommitMessage     string       `json:"commitMessage"`
-	Username          string       `json:"username"`
-	Email             string       `json:"email"`
+	CreatePR          bool         `json:"createPR"`
+	PRTitle           string       `json:"prTitle"`
+	PRBaseBranchName  string       `json:"prBaseBranchName"`
 	Csvs              []Csv        `json:"csvs"`
 }
 
@@ -50,6 +57,9 @@ type Response struct {
 
 var filesystem billy.Filesystem
 var repository *git.Repository
+var ownerName string
+var repositoryName string
+var gitHubAccessToken string
 
 func main() {
 	for {
@@ -64,15 +74,26 @@ func main() {
 
 		switch req.FunctionType {
 		case Initialize:
-			err = initialize(req.RepositoryUrl)
+			gitHubAccessToken = req.GitHubAccessToken
+			result := strings.Split(req.RepositoryUrl, "/")
+			ownerName = result[3]
+			repositoryName = result[4]
+			err = initialize(req.Username)
 			if err == nil {
 				sendMessage([]byte("{}"))
 				continue
 			}
 		case Apply:
 			err = apply(req.TargetBranchName, req.ParentBranchNames, req.CommitMessage, req.Username, req.Email, req.Csvs)
+			if err != nil {
+				break
+			}
+			var prUrl string
+			if req.CreatePR {
+				prUrl, err = createPR(req.PRTitle, req.TargetBranchName, req.PRBaseBranchName)
+			}
 			if err == nil {
-				sendMessage([]byte("{}"))
+				sendMessage([]byte(fmt.Sprintf(`{"prUrl":"%s"}`, prUrl)))
 				continue
 			}
 		default:
@@ -86,11 +107,11 @@ func main() {
 	}
 }
 
-func initialize(repositoryUrl string) error {
+func initialize(username string) error {
 	filesystem = memfs.New()
 	var err error
 	repository, err = git.Clone(memory.NewStorage(), filesystem, &git.CloneOptions{
-		URL: repositoryUrl,
+		URL: fmt.Sprintf("https://%s:%s@github.com/%s/%s.git", username, gitHubAccessToken, ownerName, repositoryName),
 	})
 	return err
 }
@@ -198,6 +219,28 @@ func apply(targetBranchName string, parentBranchNames []string, commitMessage st
 	}
 
 	return nil
+}
+
+func createPR(title string, commitBranchName string, baseBranchName string) (string, error) {
+	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: gitHubAccessToken})
+	tc := oauth2.NewClient(oauth2.NoContext, ts)
+	client := github.NewClient(tc)
+
+	newPR := &github.NewPullRequest{
+		Title: &title,
+		Head:  &commitBranchName,
+		Base:  &baseBranchName,
+	}
+
+	pr, _, err := client.PullRequests.Create(oauth2.NoContext, ownerName, repositoryName, newPR)
+	if err != nil {
+		if strings.Contains(err.Error(), "A pull request already exists for") {
+			return "", nil
+		}
+		return "", err
+	}
+
+	return *pr.HTMLURL, nil
 }
 
 func readMessage() []byte {

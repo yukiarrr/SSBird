@@ -231,6 +231,17 @@ window.popupObject = {};
     );
   };
 
+  const initializeCheckbox = async () => {
+    const createPR = (await chromeStorage.get("inputCreatePR"))[
+      "inputCreatePR"
+    ];
+    const checkboxCreatePR = $("#checkbox-create-pr");
+    checkboxCreatePR.prop("checked", createPR);
+    checkboxCreatePR.change(() =>
+      chromeStorage.set({ inputCreatePR: checkboxCreatePR.is(":checked") })
+    );
+  };
+
   const initializeButtons = async () => {
     const startLoading = (element, loadingText) => {
       $(element)
@@ -302,8 +313,9 @@ window.popupObject = {};
           spreadsheetIds: popupObject.applySpreadsheetsSelectize.items,
           targetSheetName: popupObject.targetSheetSelectize.items[0],
           overlaySheetNames: popupObject.overlaySheetsSelectize.items,
-          parentBranchName: $("#input-parent-branch").val(),
           commitMessage: $("#textarea-commit-message").val(),
+          parentBranchName: $("#text-parent-branch").val(),
+          createPR: $("#checkbox-create-pr").is(":checked"),
           callback: () => {
             stopLoading("#btn-apply", "Apply");
             isApplying = false;
@@ -318,5 +330,6 @@ window.popupObject = {};
   initializeTab();
   initializeApplySelectizes();
   initializeConfigSelectizes();
+  initializeCheckbox();
   initializeButtons();
 })();
