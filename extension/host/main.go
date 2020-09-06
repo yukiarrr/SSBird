@@ -113,7 +113,10 @@ func initialize(username string) error {
 	repository, err = git.Clone(memory.NewStorage(), filesystem, &git.CloneOptions{
 		URL: fmt.Sprintf("https://%s:%s@github.com/%s/%s.git", username, gitHubAccessToken, ownerName, repositoryName),
 	})
-	return err
+	if err != nil {
+		return fmt.Errorf("Failed clone repository.\nCheck GitHub Access Token or Config File Id.\n\n%s", err)
+	}
+	return nil
 }
 
 func apply(targetBranchName string, parentBranchNames []string, commitMessage string, username string, email string, csvs []Csv) error {
