@@ -107,9 +107,12 @@ func sync() error {
 	if err != nil {
 		return err
 	}
-	_, err = request("POST", viper.GetString("syncUrl"), googleAccessToken, syncRequestJson)
+	syncResponse, err := request("POST", viper.GetString("syncUrl"), googleAccessToken, syncRequestJson)
 	if err != nil {
 		return err
+	}
+	if syncResponse != "{}" {
+		return fmt.Errorf("Error Response")
 	}
 
 	return nil
