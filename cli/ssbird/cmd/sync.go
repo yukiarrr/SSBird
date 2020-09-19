@@ -19,6 +19,10 @@ import (
 	"google.golang.org/api/drive/v3"
 )
 
+type GetCommitResponse struct {
+	Sha string `json:"sha"`
+}
+
 type SyncRequest struct {
 	CsvText         string `json:"csvText"`
 	SheetName       string `json:"sheetName"`
@@ -85,7 +89,20 @@ func sync() error {
 
 	repositoryUrl := viper.GetString("repositoryUrl")
 	const gitHubSubstr = "github.com/"
-	csvUrl := fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/%s", repositoryUrl[strings.Index(repositoryUrl, gitHubSubstr)+len(gitHubSubstr):], sheetName, csvPath)
+	repositoryName := repositoryUrl[strings.Index(repositoryUrl, gitHubSubstr)+len(gitHubSubstr):]
+
+	commitUrl := fmt.Sprintf("https://api.github.com/repos/%s/commits/%s", repositoryName, sheetName)
+	commitResponseJson, err := request("GET", commitUrl, viper.GetString("gitHubAccessToken"), nil)
+	if err != nil {
+		return err
+	}
+	var commitResponse GetCommitResponse
+	err = json.Unmarshal([]byte(commitResponseJson), &commitResponse)
+	if err != nil {
+		return err
+	}
+
+	csvUrl := fmt.Sprintf("https://raw.githubusercontent.com/%s/%s/%s", repositoryName, commitResponse.Sha, csvPath)
 	csvText, err := request("GET", csvUrl, viper.GetString("gitHubAccessToken"), nil)
 	if err != nil {
 		return err
